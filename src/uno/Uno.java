@@ -77,6 +77,7 @@ public class Uno {
                                     System.out.println("Type: Blue, Green, Red or Yellow"); //get passive-aggressive with that bitch
                                 }
                             } while (colorGot == 0); //yea again..booleans. use em. bitch.
+                            cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 14) {
                             int colorGot = 0; //again booleans would be cool.  butt fuck em. 
                             int playerGot = 0; //^ditto
@@ -140,8 +141,10 @@ public class Uno {
                         cardPlayed = 1;
                     } else if (Card.getCardColor(play1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(play1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(play1.getCard(choice - 1));
+                        play1.removeCard(choice - 1);
                         if (Card.getCardNumber(play1.getCard(choice - 1)) == 10) {
                             skip = true;
+                            cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 11) {
                             int playerGot = 0;
                             do {
@@ -170,6 +173,7 @@ public class Uno {
                                     System.out.println("Type: Blue, Green, Red or Yellow");
                                 }
                             } while (playerGot == 0);
+                            cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 12) {
                             if (reverse == true) {
                                 reverse = false;
@@ -207,6 +211,7 @@ public class Uno {
                         currentPlayer = 2;
                     }
                 }
+                break;
             }
             while (currentPlayer == 2) {
                 skip = false;
@@ -241,6 +246,7 @@ public class Uno {
                                     colorGot = 1;
                                 }
                             } while (colorGot == 0); //yea again..booleans. use em. bitch.
+                            cardPlayed = 1;
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 14) {
                             int colorGot = 0; //again booleans would be cool.  butt fuck em. 
                             int playerGot = 0; //^ditto
@@ -296,6 +302,7 @@ public class Uno {
                         discardPile.addCard(comp1.getCard(choice - 1));
                         if (Card.getCardNumber(comp1.getCard(choice - 1)) == 10) {
                             skip = true;
+                            cardPlayed = 1;
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 11) {
                             int playerGot = 0;
                             do {
@@ -316,6 +323,7 @@ public class Uno {
                                     playerGot = 1;
                                 }
                             } while (playerGot == 0);
+                            cardPlayed = 1;
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 12) {
                             if (reverse == true) {
                                 reverse = false;
@@ -327,6 +335,7 @@ public class Uno {
                             comp1.removeCard(choice - 1);
                             cardPlayed = 1;
                         }
+                        cardPlayed = 1;
                     }
                 } while (cardPlayed == 0);
                 if (comp1.getSize() == 1) {
