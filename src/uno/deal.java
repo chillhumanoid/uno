@@ -17,7 +17,7 @@ public class deal extends cardHandler{
         hand = new ArrayList<>();
     }
     public void addCard(cardHandler deck){
-        hand.add(deck.getLast());
+        hand.add(0,deck.getLast());
         deck.removeLast();
     }
     public void addCard(uno.Card addCard){
@@ -29,6 +29,7 @@ public class deal extends cardHandler{
     public Card getCard(int elem){
         return hand.get(elem);
     }
+    @Override
     public int getSize(){
         return hand.size();
     }
