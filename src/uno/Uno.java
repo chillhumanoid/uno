@@ -116,18 +116,21 @@ public class Uno {
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
+                                    playerGot = 1;
                                 } else {
                                     System.out.println();
                                     System.out.println("Please select a valid number(1-3)");
@@ -270,18 +273,21 @@ public class Uno {
                                     play1.addCard(deck);
                                     play1.addCard(deck);
                                     play1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
+                                    playerGot = 1;
                                 }
                             } while (playerGot == 0);
                         }
@@ -297,14 +303,17 @@ public class Uno {
                                 if (choice == 1) {
                                     play1.addCard(deck);
                                     play1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
+                                    playerGot = 1;
                                 }
                             } while (playerGot == 0);
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 12) {
@@ -408,18 +417,21 @@ public class Uno {
                                     play1.addCard(deck);
                                     play1.addCard(deck);
                                     play1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
+                                    playerGot = 1;
                                 }
                             } while (playerGot == 0);
                         }
@@ -435,14 +447,17 @@ public class Uno {
                                 if (choice == 1) {
                                     play1.addCard(deck);
                                     play1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
+                                    playerGot = 1;
                                 }
                             } while (playerGot == 0);
                         } else if (Card.getCardNumber(comp2.getCard(choice - 1)) == 12) {
@@ -548,18 +563,21 @@ public class Uno {
                                     play1.addCard(deck);
                                     play1.addCard(deck);
                                     play1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
+                                    playerGot = 1;
                                 }
                             } while (playerGot == 0);
                         }
@@ -575,14 +593,17 @@ public class Uno {
                                 if (choice == 1) {
                                     play1.addCard(deck);
                                     play1.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 2) {
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
+                                    playerGot = 1;
                                 }
                                 if (choice == 3) {
                                     comp1.addCard(deck);
                                     comp1.addCard(deck);
+                                    playerGot = 1;
                                 }
                             } while (playerGot == 0);
                         } else if (Card.getCardNumber(comp3.getCard(choice - 1)) == 12) {
