@@ -16,9 +16,9 @@ public class deal extends cardHandler{
     public deal(){
         hand = new ArrayList<>();
     }
-    public void addCard(){
-        hand.add(cards.get(cards.size()-1));
-        cards.remove(cards.size()-1);
+    public void addCard(cardHandler deck){
+        hand.add(deck.getLast());
+        deck.removeLast();
     }
     public void addCard(uno.Card addCard){
         hand.add(addCard);
