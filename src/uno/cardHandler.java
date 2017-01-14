@@ -125,13 +125,13 @@ public class cardHandler {
         Collections.shuffle(cards);
     }
     public Card getLast(){
-        return cards.get(cards.size()-1);
+        return cards.get(cards.size() - 1);
     }
     public int getSize(){
         return cards.size();
     }
     public void removeLast(){
-        cards.remove(cards.size()-1);
+        cards.remove(cards.size() - 1);
     }
 }
 
