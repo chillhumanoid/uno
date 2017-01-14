@@ -25,10 +25,10 @@ public class Uno {
         for (int i = 0; i <= 7; i++) { //adds 7 cards to each players hand. 
             //i did it this way so that the deal is legit instead of giving the first 7  cards
             //to player 1, and the second set of 7 to comp 1 and so on. 
-            play1.addCard();
-            comp1.addCard();
-            comp2.addCard();
-            comp3.addCard();
+            play1.addCard(deck);
+            comp1.addCard(deck);
+            comp2.addCard(deck);
+            comp3.addCard(deck);
         }
         deal discardPile = new deal(); //creates the discard pile
         discardPile.addCard(deck.getLast());//adds the top card of the deck to the discard pile "face up"
@@ -112,22 +112,22 @@ public class Uno {
                                 System.out.println("3. Computer 3 Cards: " + comp3.getSize());
                                 choice = s.nextInt();
                                 if (choice == 1) {
-                                    comp1.addCard();
-                                    comp1.addCard();
-                                    comp1.addCard();
-                                    comp1.addCard();
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp2.addCard();
-                                    comp2.addCard();
-                                    comp2.addCard();
-                                    comp2.addCard();
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp3.addCard();
-                                    comp3.addCard();
-                                    comp3.addCard();
-                                    comp3.addCard();
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
                                 } else {
                                     System.out.println();
                                     System.out.println("Please select a valid number(1-3)");
@@ -263,22 +263,22 @@ public class Uno {
                             do {
                                 choice = rn.nextInt((3 - 1) + 1) + 1;
                                 if (choice == 1) {
-                                    play1.addCard();
-                                    play1.addCard();
-                                    play1.addCard();
-                                    play1.addCard();
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp2.addCard();
-                                    comp2.addCard();
-                                    comp2.addCard();
-                                    comp2.addCard();
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp3.addCard();
-                                    comp3.addCard();
-                                    comp3.addCard();
-                                    comp3.addCard();
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
                                 }
                             } while (playerGot == 0);
                         }
@@ -292,16 +292,16 @@ public class Uno {
                             do {
                                 choice = rn.nextInt((3 - 1) + 1) + 1;
                                 if (choice == 1) {
-                                    play1.addCard();
-                                    play1.addCard();
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp2.addCard();
-                                    comp2.addCard();
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp3.addCard();
-                                    comp3.addCard();
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
                                 }
                             } while (playerGot == 0);
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 12) {
@@ -346,28 +346,28 @@ public class Uno {
 
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
-                    choice = rn.nextInt((comp2.getSize() - 0) + 1) + 0;
+                    choice = rn.nextInt((comp2.getSize() - 1) + 1) + 1;
                     if (Card.getCardColor(comp2.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         //a means any so it's 2 possible cards
                         if (Card.getCardNumber(comp2.getCard(choice - 1)) == 13) {//13 is the wild card
                             int colorGot = 0;//for the do-while loop
                             comp2.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
                             do {//do the following while colorGot = 0
-                                int c2CC = 0;
-                                c2CC = rn.nextInt((4 - 1) + 1) + 1;
-                                if (c2CC == 1) {//if the input is blue
+                                int c3CC = 0;
+                                c3CC = rn.nextInt((4 - 1) + 1) + 1;
+                                if (c3CC == 1) {//if the input is blue
                                     discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
                                     printDiscard(discardPile); //displays what's on the discard pile
                                     colorGot = 1;//basically a boolean. really. i should use those more.
-                                } else if (c2CC == 2) { //same thing as blue. read blue, replace blue with red. thats this
+                                } else if (c3CC == 2) { //same thing as blue. read blue, replace blue with red. thats this
                                     discardPile.addCard(new Card(13, 'r'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
-                                } else if (c2CC == 3) {
+                                } else if (c3CC == 3) {
                                     discardPile.addCard(new Card(13, 'g'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
-                                } else if (c2CC == 4) {
+                                } else if (c3CC == 4) {
                                     discardPile.addCard(new Card(13, 'y'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
@@ -376,23 +376,23 @@ public class Uno {
                         } else if (Card.getCardNumber(comp2.getCard(choice - 1)) == 14) {
                             int colorGot = 0; //again booleans would be cool.  butt fuck em. 
                             int playerGot = 0; //^ditto
-                            int c2CC = 0;
-                            c2CC = rn.nextInt((4 - 1) + 1) + 1;
+                            int c3CC = 0;
+                            c3CC = rn.nextInt((4 - 1) + 1) + 1;
                             comp2.removeCard(choice - 1);
                             do {
-                                if (c2CC == 1) {
+                                if (c3CC == 1) {
                                     discardPile.addCard(new Card(13, 'b'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
-                                } else if (c2CC == 2) {
+                                } else if (c3CC == 2) {
                                     discardPile.addCard(new Card(13, 'r'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
-                                } else if (c2CC == 3) {
+                                } else if (c3CC == 3) {
                                     discardPile.addCard(new Card(13, 'g'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
-                                } else if (c2CC == 4) {
+                                } else if (c3CC == 4) {
                                     discardPile.addCard(new Card(13, 'y'));
                                     printDiscard(discardPile);
                                     colorGot = 1;
@@ -401,22 +401,22 @@ public class Uno {
                             do {
                                 choice = rn.nextInt((3 - 1) + 1) + 1;
                                 if (choice == 1) {
-                                    play1.addCard();
-                                    play1.addCard();
-                                    play1.addCard();
-                                    play1.addCard();
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp1.addCard();
-                                    comp1.addCard();
-                                    comp1.addCard();
-                                    comp1.addCard();
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp3.addCard();
-                                    comp3.addCard();
-                                    comp3.addCard();
-                                    comp3.addCard();
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
                                 }
                             } while (playerGot == 0);
                         }
@@ -430,16 +430,16 @@ public class Uno {
                             do {
                                 choice = rn.nextInt((3 - 1) + 1) + 1;
                                 if (choice == 1) {
-                                    play1.addCard();
-                                    play1.addCard();
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp1.addCard();
-                                    comp1.addCard();
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp3.addCard();
-                                    comp3.addCard();
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
                                 }
                             } while (playerGot == 0);
                         } else if (Card.getCardNumber(comp2.getCard(choice - 1)) == 12) {
@@ -486,7 +486,7 @@ public class Uno {
 
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
-                    choice = rn.nextInt((comp3.getSize() - 0) + 1) + 0;
+                    choice = rn.nextInt((comp3.getSize() - 1) + 1) + 1;
                     if (Card.getCardColor(comp3.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         //a means any so it's 2 possible cards
                         if (Card.getCardNumber(comp3.getCard(choice - 1)) == 13) {//13 is the wild card
@@ -541,22 +541,22 @@ public class Uno {
                             do {
                                 choice = rn.nextInt((3 - 1) + 1) + 1;
                                 if (choice == 1) {
-                                    play1.addCard();
-                                    play1.addCard();
-                                    play1.addCard();
-                                    play1.addCard();
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp2.addCard();
-                                    comp2.addCard();
-                                    comp2.addCard();
-                                    comp2.addCard();
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp1.addCard();
-                                    comp1.addCard();
-                                    comp1.addCard();
-                                    comp1.addCard();
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
                                 }
                             } while (playerGot == 0);
                         }
@@ -570,16 +570,16 @@ public class Uno {
                             do {
                                 choice = rn.nextInt((3 - 1) + 1) + 1;
                                 if (choice == 1) {
-                                    play1.addCard();
-                                    play1.addCard();
+                                    play1.addCard(deck);
+                                    play1.addCard(deck);
                                 }
                                 if (choice == 2) {
-                                    comp2.addCard();
-                                    comp2.addCard();
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
                                 }
                                 if (choice == 3) {
-                                    comp1.addCard();
-                                    comp1.addCard();
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
                                 }
                             } while (playerGot == 0);
                         } else if (Card.getCardNumber(comp3.getCard(choice - 1)) == 12) {
