@@ -140,30 +140,33 @@ public class Uno {
                         if (Card.getCardNumber(play1.getCard(choice - 1)) == 10) {
                             skip = true;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 11) {
-                            int colorGot = 0;
+                            int playerGot = 0;
                             do {
-                                System.out.print("What color do you want the deck to be?: ");
-                                input = s.nextLine();
-                                if ("blue".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'b'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("red".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("green".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("yellow".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
+                                System.out.print("What player do you want to draw two?: ");
+                                System.out.println("1. Computer 1 Cards: " + comp1.getSize());
+                                System.out.println("2. Computer 2 Cards: " + comp2.getSize());
+                                System.out.println("3. Computer 3 Cards: " + comp3.getSize());
+                                choice = s.nextInt();
+                                if (choice == 1) {
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    playerGot = 1;
+                                } else if (choice == 2) {
+                                    comp1.addCard(deck);
+                                    comp1.addCard(deck);
+                                    playerGot = 1;
+                                } else if (choice == 3) {
+                                    comp2.addCard(deck);
+                                    comp2.addCard(deck);
+                                    playerGot = 1;
+                                } else if (choice ==4) {
+                                    comp3.addCard(deck);
+                                    comp3.addCard(deck);
+                                    playerGot = 1;
                                 } else {
                                     System.out.println("Type: Blue, Green, Red or Yellow");
                                 }
-                            } while (colorGot == 0);
+                            } while (playerGot == 0);
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 12) {
                             if (reverse == true) {
                                 reverse = false;
