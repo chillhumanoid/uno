@@ -127,6 +127,9 @@ public class cardHandler {
     public Card getLast(){
         return cards.get(cards.size()-1);
     }
+    public int getSize(){
+        return cards.size();
+    }
     public void removeLast(){
         cards.remove(cards.size()-1);
     }
