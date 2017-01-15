@@ -48,61 +48,34 @@ public class Uno {
                     System.out.print("Which card do you want to play?: ");
                     choice = s.nextInt(); //asks for an integer from the user
 
-                    if (Card.getCardColor(play1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
+                    if (choice < play1.getSize() && Card.getCardColor(play1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         if (Card.getCardNumber(play1.getCard(choice - 1)) == 13) {//13 is the wild card
                             wildCard();
                             play1.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
-                            cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 14) {
                             wildDrawFour();
                             play1.removeCard(choice - 1);
-                            cardPlayed = 1;
                         }
-                    } else if (Card.getCardColor(play1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(play1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
+                        cardPlayed = 1;
+                    } else if (choice < play1.getSize() && Card.getCardColor(play1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(play1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(play1.getCard(choice - 1));
                         play1.removeCard(choice - 1);
                         if (Card.getCardNumber(play1.getCard(choice - 1)) == 10) {
                             skip = true;
-                            cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 11) {
-                            int playerGot = 0;
-                            do {
-                                System.out.print("What player do you want to draw two?: ");
-                                System.out.println("1. Computer 1 Cards: " + comp1.getSize());
-                                System.out.println("2. Computer 2 Cards: " + comp2.getSize());
-                                System.out.println("3. Computer 3 Cards: " + comp3.getSize());
-                                choice = s.nextInt();
-                                if (choice == 1) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                } else if (choice == 2) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                } else if (choice == 3) {
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    playerGot = 1;
-                                } else if (choice == 4) {
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    playerGot = 1;
-                                } else {
-                                    System.out.println("Type: Blue, Green, Red or Yellow");
-                                }
-                            } while (playerGot == 0);
-                            cardPlayed = 1;
+                            wildPlayer(2);
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 12) {
-                            if (reverse == true) {
+                            if (reverse) {
                                 reverse = false;
-                            } else if (reverse == false) {
+                            } else if (!reverse) {
                                 reverse = true;
                             } else {
 
                             }
                         }
-                        play1.removeCard(choice - 1);
+                        cardPlayed = 1;
+                    } else if(choice == play1.getSize()){
+                        play1.addCard(deck);
                         cardPlayed = 1;
                     } else {
                         System.out.println();
