@@ -11,26 +11,25 @@ import java.util.Random;
 public class Uno {
 
     static Random rn = new Random();
+    static deal play1 = new deal();//for the user
+    static deal comp1 = new deal();//for computer 1
+    static deal comp2 = new deal();//for computer 2
+    static deal comp3 = new deal(); //for computer 3
+    static cardHandler deck = new cardHandler();
+    static Scanner s = new Scanner(System.in);
+    static deal discardPile = new deal();
 
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in); //scanner is for user input
         int choice; //holds users choice in all cases where it's needed
         String input; //holds any string based input from user
         //card creator
-        cardHandler deck = new cardHandler();
-        deal play1 = new deal();//for the user
-        deal comp1 = new deal();//for computer 1
-        deal comp2 = new deal();//for computer 2
-        deal comp3 = new deal(); //for computer 3
         for (int i = 0; i <= 7; i++) { //adds 7 cards to each players hand. 
-            //i did it this way so that the deal is legit instead of giving the first 7  cards
-            //to player 1, and the second set of 7 to comp 1 and so on. 
             play1.addCard(deck);
             comp1.addCard(deck);
             comp2.addCard(deck);
             comp3.addCard(deck);
         }
-        deal discardPile = new deal(); //creates the discard pile
         discardPile.addCard(deck.getLast());//adds the top card of the deck to the discard pile "face up"
 
         int currentPlayer = 1; //current player = 1 (user)
@@ -50,33 +49,9 @@ public class Uno {
                     choice = s.nextInt(); //asks for an integer from the user
 
                     if (Card.getCardColor(play1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
-                        //a means any so it's 2 possible cards
                         if (Card.getCardNumber(play1.getCard(choice - 1)) == 13) {//13 is the wild card
-                            int colorGot = 0;//for the do-while loop
+                            wildCard();
                             play1.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
-                            do {//do the following while colorGot = 0
-                                System.out.print("What color do you want the deck to be?: ");
-                                input = s.nextLine();//accepts all input from the user
-                                if ("blue".equals(input.toLowerCase())) {//if the input is blue
-                                    discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
-                                    printDiscard(discardPile); //displays what's on the discard pile
-                                    colorGot = 1;//basically a boolean. really. i should use those more.
-                                } else if ("red".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with red. thats this
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("green".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("yellow".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else {
-                                    System.out.println("Type: Blue, Green, Red or Yellow"); //get passive-aggressive with that bitch
-                                }
-                            } while (colorGot == 0); //yea again..booleans. use em. bitch.
                             cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 14) {
                             int colorGot = 0; //again booleans would be cool.  butt fuck em. 
@@ -300,6 +275,7 @@ public class Uno {
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(comp1.getCard(choice - 1));
+                        comp1.removeCard(choice - 1);
                         if (Card.getCardNumber(comp1.getCard(choice - 1)) == 10) {
                             skip = true;
                             cardPlayed = 1;
@@ -359,12 +335,12 @@ public class Uno {
                         currentPlayer = 3;
                     }
                 }
+                break;
             }
             while (currentPlayer == 3) {
                 skip = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
-
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
                     choice = rn.nextInt((comp2.getSize() - 1) + 1) + 1;
@@ -662,7 +638,26 @@ public class Uno {
         display++;
         System.out.println(display + ". Draw Card");
     }
-
+    public static void wildCard(){
+        System.out.print("What color do you want the deck to be?: ");
+        String input = s.nextLine();//accepts all input from the user
+        if ("blue".equals(input.toLowerCase())) {//if the input is blue
+            discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
+            printDiscard(discardPile); //displays what's on the discard pile
+        } else if ("red".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with red. thats this
+            discardPile.addCard(new Card(13, 'r'));
+            printDiscard(discardPile);
+        } else if ("green".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with green. thats this
+            discardPile.addCard(new Card(13, 'g'));
+            printDiscard(discardPile);
+        } else if ("yellow".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with yellow. thats this
+            discardPile.addCard(new Card(13, 'y'));
+            printDiscard(discardPile);
+        } else {
+            System.out.println("Type: Blue, Green, Red or Yellow"); //get passive-aggressive with that bitch
+            wildCard(); //RECURSION
+        }
+    }
     public static void printDiscard(deal discardPile) {
         System.out.print("Discard Pile: ");
         System.out.println(discardPile.getLast());
