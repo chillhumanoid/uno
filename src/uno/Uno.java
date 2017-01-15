@@ -50,7 +50,7 @@ public class Uno {
 
                     if (choice < play1.getSize() && Card.getCardColor(play1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         if (Card.getCardNumber(play1.getCard(choice - 1)) == 13) {//13 is the wild card
-                            wildCard();
+                            wildColor();
                             play1.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 14) {
                             wildDrawFour();
@@ -60,18 +60,23 @@ public class Uno {
                     } else if (choice < play1.getSize() && Card.getCardColor(play1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(play1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(play1.getCard(choice - 1));
                         play1.removeCard(choice - 1);
-                        if (Card.getCardNumber(play1.getCard(choice - 1)) == 10) {
-                            skip = true;
-                        } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 11) {
-                            wildPlayer(2);
-                        } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 12) {
-                            if (reverse) {
-                                reverse = false;
-                            } else if (!reverse) {
-                                reverse = true;
-                            } else {
-
-                            }
+                        switch (Card.getCardNumber(play1.getCard(choice))) {
+                            case 10:
+                                skip = true;
+                                break;
+                            case 11:
+                                wildPlayer(2);
+                                break;
+                            case 12:
+                                if (reverse) {
+                                    reverse = false;
+                                } else if (!reverse) {
+                                    reverse = true;
+                                } else {
+                                    
+                                }   break;
+                            default:
+                                break;
                         }
                         cardPlayed = 1;
                     } else if(choice == play1.getSize()){
@@ -89,6 +94,7 @@ public class Uno {
                 if (play1.getSize() == 0) {
                     System.out.println();
                     System.out.println("Player 1 won");
+                    gameEnded = true;
                 }
                 if (reverse == true) {
                     if (skip == true) {
@@ -108,136 +114,56 @@ public class Uno {
             while (currentPlayer == 2) {
                 skip = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
-                System.out.println(); //spacing    
+                System.out.println(); //spacing
+                printHand(comp1); //show the user what is in their hand
+                System.out.println(); //spacing
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
-                    choice = rn.nextInt((comp1.getSize() - 1) + 1) + 1;
-                    if (Card.getCardColor(comp1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
-                        //a means any so it's 2 possible cards
+                    System.out.print("Which card do you want to play?: ");
+                    choice = s.nextInt(); //asks for an integer from the user
+
+                    if (choice < comp1.getSize() && Card.getCardColor(comp1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         if (Card.getCardNumber(comp1.getCard(choice - 1)) == 13) {//13 is the wild card
-                            int colorGot = 0;//for the do-while loop
+                            wildColor();
                             comp1.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
-                            do {//do the following while colorGot = 0
-                                int c1CC = 0;
-                                c1CC = rn.nextInt((4 - 1) + 1) + 1;
-                                if (c1CC == 1) {//if the input is blue
-                                    discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
-                                    printDiscard(discardPile); //displays what's on the discard pile
-                                    colorGot = 1;//basically a boolean. really. i should use those more.
-                                } else if (c1CC == 2) { //same thing as blue. read blue, replace blue with red. thats this
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c1CC == 3) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c1CC == 4) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                }
-                            } while (colorGot == 0); //yea again..booleans. use em. bitch.
-                            cardPlayed = 1;
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 14) {
-                            int colorGot = 0; //again booleans would be cool.  butt fuck em. 
-                            int playerGot = 0; //^ditto
-                            int c1CC = 0;
-                            c1CC = rn.nextInt((4 - 1) + 1) + 1;
+                            wildDrawFour2();
                             comp1.removeCard(choice - 1);
-                            do {
-                                if (c1CC == 1) {
-                                    discardPile.addCard(new Card(13, 'b'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c1CC == 2) {
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c1CC == 3) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c1CC == 4) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                }
-                            } while (colorGot == 0);
-                            do {
-                                choice = rn.nextInt((3 - 1) + 1) + 1;
-                                if (choice == 1) {
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    playerGot = 1;
-                                }
-                            } while (playerGot == 0);
                         }
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
+                    } else if (choice < comp1.getSize() && Card.getCardColor(comp1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(comp1.getCard(choice - 1));
                         comp1.removeCard(choice - 1);
                         if (Card.getCardNumber(comp1.getCard(choice - 1)) == 10) {
                             skip = true;
-                            cardPlayed = 1;
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 11) {
-                            int playerGot = 0;
-                            do {
-                                choice = rn.nextInt((3 - 1) + 1) + 1;
-                                if (choice == 1) {
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    playerGot = 1;
-                                }
-                            } while (playerGot == 0);
-                            cardPlayed = 1;
+                            wildPlayer2(2);
                         } else if (Card.getCardNumber(comp1.getCard(choice - 1)) == 12) {
-                            if (reverse == true) {
+                            if (reverse) {
                                 reverse = false;
-                            } else if (reverse == false) {
+                            } else if (!reverse) {
                                 reverse = true;
                             } else {
 
                             }
-                            comp1.removeCard(choice - 1);
-                            cardPlayed = 1;
                         }
                         cardPlayed = 1;
+                    } else if(choice == comp1.getSize()){
+                        comp1.addCard(deck);
+                        cardPlayed = 1;
+                    } else {
+                        System.out.println();
+                        System.out.println("Please Select a valid card");
                     }
                 } while (cardPlayed == 0);
                 if (comp1.getSize() == 1) {
                     System.out.println();
-                    System.out.println("Computer 1 Calls Uno");
+                    System.out.println("Player 2 Calls Uno");
                 }
                 if (comp1.getSize() == 0) {
                     System.out.println();
-                    System.out.println("Computer 1 has won");
+                    System.out.println("Player 2 won");
+                    gameEnded = true;
                 }
                 if (reverse == true) {
                     if (skip == true) {
@@ -253,135 +179,60 @@ public class Uno {
                     }
                 }
                 break;
+            
             }
             while (currentPlayer == 3) {
                 skip = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
+                printHand(comp2); //show the user what is in their hand
+                System.out.println(); //spacing
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
-                    choice = rn.nextInt((comp2.getSize() - 1) + 1) + 1;
-                    if (Card.getCardColor(comp2.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
-                        //a means any so it's 2 possible cards
+                    System.out.print("Which card do you want to play?: ");
+                    choice = s.nextInt(); //asks for an integer from the user
+
+                    if (choice < comp2.getSize() && Card.getCardColor(comp2.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         if (Card.getCardNumber(comp2.getCard(choice - 1)) == 13) {//13 is the wild card
-                            int colorGot = 0;//for the do-while loop
+                            wildColor();
                             comp2.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
-                            do {//do the following while colorGot = 0
-                                int c3CC = 0;
-                                c3CC = rn.nextInt((4 - 1) + 1) + 1;
-                                if (c3CC == 1) {//if the input is blue
-                                    discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
-                                    printDiscard(discardPile); //displays what's on the discard pile
-                                    colorGot = 1;//basically a boolean. really. i should use those more.
-                                } else if (c3CC == 2) { //same thing as blue. read blue, replace blue with red. thats this
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 3) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 4) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                }
-                            } while (colorGot == 0); //yea again..booleans. use em. bitch.
                         } else if (Card.getCardNumber(comp2.getCard(choice - 1)) == 14) {
-                            int colorGot = 0; //again booleans would be cool.  butt fuck em. 
-                            int playerGot = 0; //^ditto
-                            int c3CC = 0;
-                            c3CC = rn.nextInt((4 - 1) + 1) + 1;
+                            wildDrawFour3();
                             comp2.removeCard(choice - 1);
-                            do {
-                                if (c3CC == 1) {
-                                    discardPile.addCard(new Card(13, 'b'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 2) {
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 3) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 4) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                }
-                            } while (colorGot == 0);
-                            do {
-                                choice = rn.nextInt((3 - 1) + 1) + 1;
-                                if (choice == 1) {
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    playerGot = 1;
-                                }
-                            } while (playerGot == 0);
                         }
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp2.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp2.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
-                        discardPile.addCard(comp1.getCard(choice - 1));
+                    } else if (choice < comp2.getSize() && Card.getCardColor(comp2.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp2.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
+                        discardPile.addCard(comp2.getCard(choice - 1));
+                        comp2.removeCard(choice - 1);
                         if (Card.getCardNumber(comp2.getCard(choice - 1)) == 10) {
                             skip = true;
                         } else if (Card.getCardNumber(comp2.getCard(choice - 1)) == 11) {
-                            int playerGot = 0;
-                            do {
-                                choice = rn.nextInt((3 - 1) + 1) + 1;
-                                if (choice == 1) {
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    playerGot = 1;
-                                }
-                            } while (playerGot == 0);
+                            wildPlayer3(2);
                         } else if (Card.getCardNumber(comp2.getCard(choice - 1)) == 12) {
-                            if (reverse == true) {
+                            if (reverse) {
                                 reverse = false;
-                            } else if (reverse == false) {
+                            } else if (!reverse) {
                                 reverse = true;
                             } else {
 
                             }
-                            comp2.removeCard(choice - 1);
-                            cardPlayed = 1;
                         }
+                        cardPlayed = 1;
+                    } else if(choice == comp2.getSize()){
+                        comp2.addCard(deck);
+                        cardPlayed = 1;
+                    } else {
+                        System.out.println();
+                        System.out.println("Please Select a valid card");
                     }
                 } while (cardPlayed == 0);
                 if (comp2.getSize() == 1) {
                     System.out.println();
-                    System.out.println("Computer 2 Calls Uno");
+                    System.out.println("Player 3 Calls Uno");
                 }
                 if (comp2.getSize() == 0) {
                     System.out.println();
-                    System.out.println("Computer 2 has won");
+                    System.out.println("Player 3 won");
                     gameEnded = true;
                 }
                 if (reverse == true) {
@@ -397,151 +248,76 @@ public class Uno {
                         currentPlayer = 4;
                     }
                 }
+                break;
             }
-
             while (currentPlayer == 4) {
                 skip = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
-
+                printHand(comp3); //show the user what is in their hand
+                System.out.println(); //spacing
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
-                    choice = rn.nextInt((comp3.getSize() - 1) + 1) + 1;
-                    if (Card.getCardColor(comp3.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
-                        //a means any so it's 2 possible cards
+                    System.out.print("Which card do you want to play?: ");
+                    choice = s.nextInt(); //asks for an integer from the user
+
+                    if (choice < comp3.getSize() && Card.getCardColor(comp3.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         if (Card.getCardNumber(comp3.getCard(choice - 1)) == 13) {//13 is the wild card
-                            int colorGot = 0;//for the do-while loop
+                            wildColor();
                             comp3.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
-                            do {//do the following while colorGot = 0
-                                int c3CC = 0;
-                                c3CC = rn.nextInt((4 - 1) + 1) + 1;
-                                if (c3CC == 1) {//if the input is blue
-                                    discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
-                                    printDiscard(discardPile); //displays what's on the discard pile
-                                    colorGot = 1;//basically a boolean. really. i should use those more.
-                                } else if (c3CC == 2) { //same thing as blue. read blue, replace blue with red. thats this
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 3) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 4) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                }
-                            } while (colorGot == 0); //yea again..booleans. use em. bitch.
                         } else if (Card.getCardNumber(comp3.getCard(choice - 1)) == 14) {
-                            int colorGot = 0; //again booleans would be cool.  butt fuck em. 
-                            int playerGot = 0; //^ditto
-                            int c3CC = 0;
-                            c3CC = rn.nextInt((4 - 1) + 1) + 1;
+                            wildDrawFour4();
                             comp3.removeCard(choice - 1);
-                            do {
-                                if (c3CC == 1) {
-                                    discardPile.addCard(new Card(13, 'b'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 2) {
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 3) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if (c3CC == 4) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                }
-                            } while (colorGot == 0);
-                            do {
-                                choice = rn.nextInt((3 - 1) + 1) + 1;
-                                if (choice == 1) {
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                            } while (playerGot == 0);
                         }
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp3.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp3.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
+                    } else if (choice < comp3.getSize() && Card.getCardColor(comp3.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(comp3.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(comp3.getCard(choice - 1));
+                        comp3.removeCard(choice - 1);
                         if (Card.getCardNumber(comp3.getCard(choice - 1)) == 10) {
                             skip = true;
                         } else if (Card.getCardNumber(comp3.getCard(choice - 1)) == 11) {
-                            int playerGot = 0;
-                            do {
-                                choice = rn.nextInt((3 - 1) + 1) + 1;
-                                if (choice == 1) {
-                                    play1.addCard(deck);
-                                    play1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                            } while (playerGot == 0);
+                            wildPlayer4(2);
                         } else if (Card.getCardNumber(comp3.getCard(choice - 1)) == 12) {
-                            if (reverse == true) {
+                            if (reverse) {
                                 reverse = false;
-                            } else if (reverse == false) {
+                            } else if (!reverse) {
                                 reverse = true;
                             } else {
 
                             }
-                            comp3.removeCard(choice - 1);
-                            cardPlayed = 1;
                         }
+                        cardPlayed = 1;
+                    } else if(choice == comp3.getSize()){
+                        comp3.addCard(deck);
+                        cardPlayed = 1;
+                    } else {
+                        System.out.println();
+                        System.out.println("Please Select a valid card");
                     }
                 } while (cardPlayed == 0);
                 if (comp3.getSize() == 1) {
                     System.out.println();
-                    System.out.println("Computer 1 Calls Uno");
+                    System.out.println("Player 3 Calls Uno");
                 }
                 if (comp3.getSize() == 0) {
                     System.out.println();
-                    System.out.println("Computer 1 has won");
+                    System.out.println("Player 3 won");
+                    gameEnded = true;
                 }
                 if (reverse == true) {
                     if (skip == true) {
-                        currentPlayer = 4;
-                    } else if (skip == false) {
-                        currentPlayer = 1;
-                    }
-                } else if (reverse == false) {
-                    if (skip == true) {
-                        currentPlayer = 4;
+                        currentPlayer = 2;
                     } else if (skip == false) {
                         currentPlayer = 3;
                     }
+                } else if (reverse == false) {
+                    if (skip == true) {
+                        currentPlayer = 2;
+                    } else if (skip == false) {
+                        currentPlayer = 1;
+                    }
                 }
+                break;
             }
         } while (!gameEnded);
     }
@@ -555,13 +331,12 @@ public class Uno {
         display++;
         System.out.println(display + ". Draw Card");
     }
-
     public static void wildPlayer(int i) {
         System.out.println();
         System.out.println("Which Player do you want to draw " + i + "?:");
-        System.out.println("1. Computer 1 Cards: " + comp1.getSize());
-        System.out.println("2. Computer 2 Cards: " + comp2.getSize());
-        System.out.println("3. Computer 3 Cards: " + comp3.getSize());
+        System.out.println("1. Player 2 Cards: " + comp1.getSize());
+        System.out.println("2. Player 3 Cards: " + comp2.getSize());
+        System.out.println("3. Player 4 Cards: " + comp3.getSize());
         int choice = s.nextInt();
         if (choice == 1) {
             for (int y = 0; y <= i; y++) {
@@ -581,6 +356,83 @@ public class Uno {
             wildPlayer(i);
         }
     }
+
+    public static void wildPlayer2(int i) {
+        System.out.println();
+        System.out.println("Which Player do you want to draw " + i + "?:");
+        System.out.println("1. Player 1 Cards: " + play1.getSize());
+        System.out.println("2. Player 3 Cards: " + comp2.getSize());
+        System.out.println("3. Player 4 Cards: " + comp3.getSize());
+        int choice = s.nextInt();
+        if (choice == 1) {
+            for (int y = 0; y <= i; y++) {
+                play1.addCard(deck);
+            }
+        } else if (choice == 2) {
+            for (int y = 0; y <= i; y++) {
+                comp2.addCard(deck);
+            }
+        } else if (choice == 3) {
+            for (int y = 0; y <= i; y++) {
+                comp3.addCard(deck);
+            }
+        } else {
+            System.out.println();
+            System.out.println("Please select a valid number(1-3)");
+            wildPlayer(i);
+        }
+    }
+    public static void wildPlayer3(int i) {
+        System.out.println();
+        System.out.println("Which Player do you want to draw " + i + "?:");
+        System.out.println("1. Player 1 Cards: " + play1.getSize());
+        System.out.println("2. Player 2 Cards: " + comp1.getSize());
+        System.out.println("3. Player 4 Cards: " + comp3.getSize());
+        int choice = s.nextInt();
+        if (choice == 1) {
+            for (int y = 0; y <= i; y++) {
+                play1.addCard(deck);
+            }
+        } else if (choice == 2) {
+            for (int y = 0; y <= i; y++) {
+                comp1.addCard(deck);
+            }
+        } else if (choice == 3) {
+            for (int y = 0; y <= i; y++) {
+                comp3.addCard(deck);
+            }
+        } else {
+            System.out.println();
+            System.out.println("Please select a valid number(1-3)");
+            wildPlayer(i);
+        }
+    }
+        public static void wildPlayer4(int i) {
+        System.out.println();
+        System.out.println("Which Player do you want to draw " + i + "?:");
+        System.out.println("1. Player 1 Cards: " + play1.getSize());
+        System.out.println("2. Player 2 Cards: " + comp1.getSize());
+        System.out.println("3. Player 3 Cards: " + comp2.getSize());
+        int choice = s.nextInt();
+        if (choice == 1) {
+            for (int y = 0; y <= i; y++) {
+                play1.addCard(deck);
+            }
+        } else if (choice == 2) {
+            for (int y = 0; y <= i; y++) {
+                comp1.addCard(deck);
+            }
+        } else if (choice == 3) {
+            for (int y = 0; y <= i; y++) {
+                comp2.addCard(deck);
+            }
+        } else {
+            System.out.println();
+            System.out.println("Please select a valid number(1-3)");
+            wildPlayer(i);
+        }
+    }
+
 
     public static void wildColor() {
         System.out.print("What color do you want the deck to be?: ");
@@ -607,11 +459,17 @@ public class Uno {
         wildColor();
         wildPlayer(4);
     }
-
-    public static void wildCard() {
-        System.out.print("What color do you want the deck to be?: ");
-        String input = s.nextLine();//accepts all input from the user
+    public static void wildDrawFour2() {
         wildColor();
+        wildPlayer2(4);
+    }
+    public static void wildDrawFour3() {
+        wildColor();
+        wildPlayer3(4);
+    }
+    public static void wildDrawFour4() {
+        wildColor();
+        wildPlayer4(4);
     }
 
     public static void printDiscard(deal discardPile) {
