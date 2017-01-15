@@ -54,66 +54,10 @@ public class Uno {
                             play1.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
                             cardPlayed = 1;
                         } else if (Card.getCardNumber(play1.getCard(choice - 1)) == 14) {
-                            int colorGot = 0; //again booleans would be cool.  butt fuck em. 
-                            int playerGot = 0; //^ditto
+                            wildDrawFour();
                             play1.removeCard(choice - 1);
-                            do {
-                                System.out.print("What color do you want the deck to be?: ");
-                                input = s.nextLine();
-                                if ("blue".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'b'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("red".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'r'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("green".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'g'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else if ("yellow".equals(input.toLowerCase())) {
-                                    discardPile.addCard(new Card(13, 'y'));
-                                    printDiscard(discardPile);
-                                    colorGot = 1;
-                                } else {
-                                    System.out.println("Type: Blue, Green, Red or Yellow");
-                                }
-                            } while (colorGot == 0);
-                            do {
-                                System.out.println();
-                                System.out.println("Which Player do you want to draw 4?");
-                                System.out.println("1. Computer 1 Cards: " + comp1.getSize());
-                                System.out.println("2. Computer 2 Cards: " + comp2.getSize());
-                                System.out.println("3. Computer 3 Cards: " + comp3.getSize());
-                                choice = s.nextInt();
-                                if (choice == 1) {
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    comp1.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 2) {
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    comp2.addCard(deck);
-                                    playerGot = 1;
-                                }
-                                if (choice == 3) {
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    comp3.addCard(deck);
-                                    playerGot = 1;
-                                } else {
-                                    System.out.println();
-                                    System.out.println("Please select a valid number(1-3)");
-                                }
-                            } while (playerGot == 0);
+                            cardPlayed = 1;
                         }
-                        cardPlayed = 1;
                     } else if (Card.getCardColor(play1.getCard(choice - 1)) == Card.getCardColor(discardPile.getCard(discardPile.getSize() - 1)) || Card.getCardNumber(play1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(play1.getCard(choice - 1));
                         play1.removeCard(choice - 1);
@@ -140,7 +84,7 @@ public class Uno {
                                     comp2.addCard(deck);
                                     comp2.addCard(deck);
                                     playerGot = 1;
-                                } else if (choice ==4) {
+                                } else if (choice == 4) {
                                     comp3.addCard(deck);
                                     comp3.addCard(deck);
                                     playerGot = 1;
@@ -194,7 +138,7 @@ public class Uno {
                 System.out.println(); //spacing    
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
-                    choice = rn.nextInt((comp1.getSize() - 1)+1) + 1;
+                    choice = rn.nextInt((comp1.getSize() - 1) + 1) + 1;
                     if (Card.getCardColor(comp1.getCard(choice - 1)) == 'a') { //gets the color of the card that user chose
                         //a means any so it's 2 possible cards
                         if (Card.getCardNumber(comp1.getCard(choice - 1)) == 13) {//13 is the wild card
@@ -638,26 +582,65 @@ public class Uno {
         display++;
         System.out.println(display + ". Draw Card");
     }
-    public static void wildCard(){
+
+    public static void wildPlayer(int i) {
+        System.out.println();
+        System.out.println("Which Player do you want to draw " + i + "?:");
+        System.out.println("1. Computer 1 Cards: " + comp1.getSize());
+        System.out.println("2. Computer 2 Cards: " + comp2.getSize());
+        System.out.println("3. Computer 3 Cards: " + comp3.getSize());
+        int choice = s.nextInt();
+        if (choice == 1) {
+            for (int y = 0; y <= i; y++) {
+                comp1.addCard(deck);
+            }
+        } else if (choice == 2) {
+            for (int y = 0; y <= i; y++) {
+                comp2.addCard(deck);
+            }
+        } else if (choice == 3) {
+            for (int y = 0; y <= i; y++) {
+                comp3.addCard(deck);
+            }
+        } else {
+            System.out.println();
+            System.out.println("Please select a valid number(1-3)");
+            wildPlayer(i);
+        }
+    }
+
+    public static void wildColor() {
         System.out.print("What color do you want the deck to be?: ");
-        String input = s.nextLine();//accepts all input from the user
-        if ("blue".equals(input.toLowerCase())) {//if the input is blue
-            discardPile.addCard(new Card(13, 'b'));//adds the same card we deleted from the players hand, but with blue as the color
-            printDiscard(discardPile); //displays what's on the discard pile
-        } else if ("red".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with red. thats this
+        String input = s.nextLine();
+        if ("blue".equals(input.toLowerCase())) {
+            discardPile.addCard(new Card(13, 'b'));
+            printDiscard(discardPile);
+        } else if ("red".equals(input.toLowerCase())) {
             discardPile.addCard(new Card(13, 'r'));
             printDiscard(discardPile);
-        } else if ("green".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with green. thats this
+        } else if ("green".equals(input.toLowerCase())) {
             discardPile.addCard(new Card(13, 'g'));
             printDiscard(discardPile);
-        } else if ("yellow".equals(input.toLowerCase())) { //same thing as blue. read blue, replace blue with yellow. thats this
+        } else if ("yellow".equals(input.toLowerCase())) {
             discardPile.addCard(new Card(13, 'y'));
             printDiscard(discardPile);
         } else {
-            System.out.println("Type: Blue, Green, Red or Yellow"); //get passive-aggressive with that bitch
-            wildCard(); //RECURSION
+            System.out.println("Type: Blue, Green, Red or Yellow");
+            wildColor();
         }
     }
+
+    public static void wildDrawFour() {
+        wildColor();
+        wildPlayer(4);
+    }
+
+    public static void wildCard() {
+        System.out.print("What color do you want the deck to be?: ");
+        String input = s.nextLine();//accepts all input from the user
+        wildColor();
+    }
+
     public static void printDiscard(deal discardPile) {
         System.out.print("Discard Pile: ");
         System.out.println(discardPile.getLast());
