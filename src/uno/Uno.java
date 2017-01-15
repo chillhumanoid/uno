@@ -31,12 +31,14 @@ public class Uno {
             comp3.addCard(deck);
         }
         discardPile.addCard(deck.getLast());//adds the top card of the deck to the discard pile "face up"
-
+        System.out.println(play1.getSize());
+        printHand(play1);
+        System.out.println(play1.getCard(7));
         int currentPlayer = 1; //current player = 1 (user)
         boolean reverse = false; // will be used to denote a reverse card played. 
         boolean skip = false; //will be used to denote a skip card played
         boolean gameEnded = false; //will be set to true when the first player runs out of cards. 
-        do {
+        /**do {
             while (currentPlayer == 1) {
                 skip = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
@@ -319,7 +321,7 @@ public class Uno {
                 }
                 break;
             }
-        } while (!gameEnded);
+        } while (!gameEnded); */
     }
 
     public static void printHand(deal play1) {
