@@ -40,6 +40,7 @@ public class Uno {
                 System.out.println(); //spacing
                 printHand(play1); //show the user what is in their hand
                 System.out.println(); //spacing
+                System.out.println("Player 1");
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
                     System.out.print("Which card do you want to play?: ");
@@ -92,22 +93,14 @@ public class Uno {
                     System.out.println("Player 1 won");
                     gameEnded = true;
                 }
-                if (reverse == true) {
-                    if (skip == true) {
-                        currentPlayer = 3;
-                        break;
-                    } else if (skip == false) {
-                        currentPlayer = 4;
-                        break;
-                    }
-                } else if (reverse == false) {
-                    if (skip == true) {
-                        currentPlayer = 3;
-                        break;
-                    } else if (skip == false) {
-                        currentPlayer = 2;
-                        break;
-                    }
+                if (reverse == true && skip == true) {
+                    currentPlayer = 3;
+                }else if(reverse == true && skip == false){
+                    currentPlayer = 4;
+                } else if (reverse == false && skip == true) {
+                    currentPlayer = 3;
+                } else if (reverse == false && skip == false){
+                    currentPlayer = 2;
                 }
                 break;
             }
@@ -117,6 +110,7 @@ public class Uno {
                 System.out.println(); //spacing
                 printHand(comp1); //show the user what is in their hand
                 System.out.println(); //spacing
+                System.out.println("Player 2");
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
                     System.out.print("Which card do you want to play?: ");
@@ -170,18 +164,14 @@ public class Uno {
                     System.out.println("Player 2 won");
                     gameEnded = true;
                 }
-                if (reverse == true) {
-                    if (skip == true) {
-                        currentPlayer = 4;
-                    } else if (skip == false) {
-                        currentPlayer = 1;
-                    }
-                } else if (reverse == false) {
-                    if (skip == true) {
-                        currentPlayer = 4;
-                    } else if (skip == false) {
-                        currentPlayer = 3;
-                    }
+                if (reverse == true && skip == true) {
+                    currentPlayer = 4;
+                }else if(reverse == true && skip == false){
+                    currentPlayer = 1;
+                } else if (reverse == false && skip == true) {
+                    currentPlayer = 4;
+                } else if (reverse == false && skip == false){
+                    currentPlayer = 3;
                 }
                 break;
             
@@ -192,6 +182,7 @@ public class Uno {
                 System.out.println(); //spacing
                 printHand(comp2); //show the user what is in their hand
                 System.out.println(); //spacing
+                System.out.println("Player 3");
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
                     System.out.print("Which card do you want to play?: ");
@@ -243,18 +234,14 @@ public class Uno {
                     System.out.println("Player 3 won");
                     gameEnded = true;
                 }
-                if (reverse == true) {
-                    if (skip == true) {
-                        currentPlayer = 1;
-                    } else if (skip == false) {
-                        currentPlayer = 2;
-                    }
-                } else if (reverse == false) {
-                    if (skip == true) {
-                        currentPlayer = 1;
-                    } else if (skip == false) {
-                        currentPlayer = 4;
-                    }
+                if (reverse == true && skip == true) {
+                    currentPlayer = 1;
+                }else if(reverse == true && skip == false){
+                    currentPlayer = 2;
+                } else if (reverse == false && skip == true) {
+                    currentPlayer = 1;
+                } else if (reverse == false && skip == false){
+                    currentPlayer = 4;
                 }
                 break;
             }
@@ -264,6 +251,7 @@ public class Uno {
                 System.out.println(); //spacing
                 printHand(comp3); //show the user what is in their hand
                 System.out.println(); //spacing
+                System.out.println("Player 4");
                 printDiscard(discardPile); //show the top card in the discard pile
                 do {//do this while card played = 0
                     System.out.print("Which card do you want to play?: ");
@@ -311,18 +299,14 @@ public class Uno {
                     System.out.println("Player 3 won");
                     gameEnded = true;
                 }
-                if (reverse == true) {
-                    if (skip == true) {
-                        currentPlayer = 2;
-                    } else if (skip == false) {
-                        currentPlayer = 3;
-                    }
-                } else if (reverse == false) {
-                    if (skip == true) {
-                        currentPlayer = 2;
-                    } else if (skip == false) {
-                        currentPlayer = 1;
-                    }
+                if (reverse == true && skip == true) {
+                    currentPlayer = 2;
+                }else if(reverse == true && skip == false){
+                    currentPlayer = 3;
+                } else if (reverse == false && skip == true) {
+                    currentPlayer = 2;
+                } else if (reverse == false && skip == false){
+                    currentPlayer = 1;
                 }
                 break;
             }
