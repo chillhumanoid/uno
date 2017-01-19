@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 /**
  *
- * @author jonat
+ * @author jonathan thorne 
+ * 
+ * all code from scratch 
  */
 public class deal extends cardHandler{
     private ArrayList<Card> hand;
