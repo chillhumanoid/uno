@@ -14,5 +14,3 @@ This is the chillhumanoid version of the game.
 actual rules state when you draw a card, you see if you can play a card, otherwise your turn ends. 
 chillhumanoid rules are that when you draw a card, it's the next players turn. 
 
-actual rules state that the draw 2/4 cards go to the next player. 
-chillhumanoid rules are that you can select which player gets them. 
