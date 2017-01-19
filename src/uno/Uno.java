@@ -7,6 +7,8 @@ import java.util.Random;
  *
  * @author Jonathan Thorne Made from scratch to play Uno, will eventually add a
  * GUI, but for now it will be command line.
+ * 
+ * all code made from scratch.
  */
 public class Uno {
 
@@ -22,6 +24,7 @@ public class Uno {
 
     public static void main(String[] args) {
         //card creator
+        deck.shuffleDeck();
         for (int i = 0; i <= 6; i++) { //adds 7 cards to each players hand. 
             play1.addCard(deck);
             comp1.addCard(deck);
@@ -207,6 +210,8 @@ public class Uno {
             }
             while (currentPlayer == 3) {
                 skip = false;
+                draw2 = false;
+                draw4 = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
                 printHand(comp2); //show the user what is in their hand
@@ -289,6 +294,8 @@ public class Uno {
             }
             while (currentPlayer == 4) {
                 skip = false;
+                draw2 = false;
+                draw4 = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
                 printHand(comp3); //show the user what is in their hand
