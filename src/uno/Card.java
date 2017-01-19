@@ -4,6 +4,8 @@ package uno;
  *
  * @author Jonathan Thorne
  * Creates a object for each card. 
+ * 
+ * all code made from scratch. 
  */
 public class Card {
     private int cardNumber;
