@@ -6,7 +6,9 @@ import java.util.Collections;
 
 /**
  *
- * @author jonat
+ * @author jonathan thorne
+ * 
+ * all code made from scratch 
  */
 public class cardHandler {
     public ArrayList<Card> cards;
@@ -121,6 +123,8 @@ public class cardHandler {
         cards.add(new Card(12, 'y')); //12 is reverse
         cards.add(new Card(13, 'a')); //13 is wild
         cards.add(new Card(14, 'a')); //14 is draw 4 wild
+    }
+    public void shuffleDeck(){
         Collections.shuffle(cards);
         Collections.shuffle(cards);
     }
