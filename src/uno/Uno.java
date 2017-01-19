@@ -21,7 +21,6 @@ public class Uno {
     static deal discardPile = new deal();
 
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in); //scanner is for user input
         //card creator
         for (int i = 0; i <= 6; i++) { //adds 7 cards to each players hand. 
             play1.addCard(deck);
@@ -34,9 +33,13 @@ public class Uno {
         boolean reverse = false; // will be used to denote a reverse card played. 
         boolean skip = false; //will be used to denote a skip card played
         boolean gameEnded = false; //will be set to true when the first player runs out of cards. 
+        boolean draw2 = false;
+        boolean draw4 = false;
         do {
             while (currentPlayer == 1) {
-                skip = false;
+                skip = false; //added so that when it next goes to player 1, those values are reset. 
+                draw2 = false; //^
+                draw4 = false; // ^^
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
                 printHand(play1); //show the user what is in their hand
@@ -51,11 +54,12 @@ public class Uno {
                         play1.addCard(deck);
                         cardPlayed = 1;
                     }else if (Card.getCardColor(play1.getCard(elem)) == 'a' && Card.getCardNumber(play1.getCard(elem)) == 13) { //gets the color of the card that user chose
-                        discardPile.addCard(wildColor(elem));
+                        discardPile.addCard(wildColor(13));
                         play1.removeCard(elem);//remove the card from the player deck
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(play1.getCard(elem)) == 'a' && Card.getCardNumber(play1.getCard(elem)) == 14) {
-                        wildDrawFour();
+                    } else if (Card.getCardColor(play1.getCard(elem)) == 'a' && Card.getCardNumber(play1.getCard(elem)) == 14) { //wild draw 4. 
+                        discardPile.addCard(wildColor(14));
+                        draw4 = true;
                         play1.removeCard(elem);
                         cardPlayed = 1;
                     } else if (Card.getCardColor(play1.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(play1.getCard(elem)) == Card.getCardNumber(discardPile.getLast())) {
@@ -65,7 +69,7 @@ public class Uno {
                                 skip = true;
                                 break;
                             case 11:
-                                wildPlayer(2);
+                                draw2 = true;
                                 break;
                             case 12:
                                 if (reverse) {
@@ -95,19 +99,31 @@ public class Uno {
                     gameEnded = true;
                     System.exit(0);
                 }
-                if (reverse == true && skip == true) {
+                if (reverse && skip || !reverse && skip) {
                     currentPlayer = 3;
-                }else if(reverse == true && skip == false){
+                    if(draw2)
+                        draw2(comp2);
+                    if(draw4)
+                        draw4(comp2);
+                }else if(reverse && !skip){
                     currentPlayer = 4;
-                } else if (reverse == false && skip == true) {
-                    currentPlayer = 3;
-                } else if (reverse == false && skip == false){
+                    if(draw2)
+                        draw2(comp3);
+                    if(draw4)
+                        draw4(comp3);
+                } else if (!reverse && !skip){
                     currentPlayer = 2;
+                    if(draw2)
+                        draw2(comp1);
+                    if(draw4)
+                        draw4(comp1);
                 }
                 break;
             }
             while (currentPlayer == 2) {
                 skip = false;
+                draw2 = false;
+                draw4 = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
                 printHand(comp1); //show the user what is in their hand
@@ -123,10 +139,11 @@ public class Uno {
                         cardPlayed = 1;
                     }else if(Card.getCardColor(comp1.getCard(elem)) == 'a' && Card.getCardNumber(comp1.getCard(elem)) == 13) {
                         discardPile.addCard(wildColor(13));
-                        comp1.removeCard(choice - 1);//remove the card from the player deck. it's no longer needed there
+                        comp1.removeCard(elem);//remove the card from the player deck. it's no longer needed there
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp1.getCard(elem)) == 'a' && Card.getCardNumber(comp1.getCard(elem)) == 14) {
-                        wildDrawFour2();
+                        discardPile.addCard(wildColor(14));
+                        draw4 = true;
                         comp1.removeCard(choice - 1);
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp1.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
@@ -136,7 +153,7 @@ public class Uno {
                                 skip = true;
                                 break;
                             case 11:
-                                wildPlayer2(2);
+                                draw2 = true;
                                 break;
                             case 12:
                                 if (reverse) {
@@ -166,14 +183,24 @@ public class Uno {
                     gameEnded = true;
                     System.exit(0);
                 }
-                if (reverse && skip) {
+                if (reverse && skip || !reverse && skip) {
                     currentPlayer = 4;
+                    if (draw2)
+                        draw2(comp3);
+                    if (draw4)
+                        draw4(comp3);
                 }else if(reverse && !skip){
                     currentPlayer = 1;
-                } else if (!reverse && skip) {
-                    currentPlayer = 4;
+                    if(draw2)
+                        draw2(play1);
+                    if(draw4)
+                        draw4(play1);
                 } else if (!reverse && !skip){
                     currentPlayer = 3;
+                    if(draw2)
+                        draw2(comp2);
+                    if(draw4)
+                        draw4(comp2);
                 }
                 break;
             
@@ -196,11 +223,12 @@ public class Uno {
                     }else if(Card.getCardColor(comp2.getCard(elem)) == 'a' && Card.getCardNumber(comp2.getCard(elem))==13) { //gets the color of the card that user chose
                         comp2.removeCard(elem);//remove the card from the player deck. it's no longer needed there
                         discardPile.addCard(wildColor(13));
-                        printDiscard();
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp2.getCard(elem)) == 'a' && Card.getCardNumber(comp2.getCard(elem)) == 14) {
-                        wildDrawFour3();
-                        cardPlayed = 1;
+                       comp2.removeCard(elem);
+                       discardPile.addCard(wildColor(14));
+                       draw4 = true;
+                       cardPlayed = 1;
                     } else if (Card.getCardColor(comp2.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp2.getCard(elem)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(comp2.getCard(choice - 1));
                         switch (Card.getCardNumber(comp2.getCard(choice - 1))) {
@@ -208,7 +236,7 @@ public class Uno {
                                 skip = true;
                                 break;
                             case 11:
-                                wildPlayer3(2);
+                                draw2 = true;
                                 break;
                             case 12:
                                 if (reverse) {
@@ -238,14 +266,24 @@ public class Uno {
                     gameEnded = true;
                     System.exit(0);
                 }
-                if (reverse && skip) {
+                if (reverse && skip || !reverse && skip) {
                     currentPlayer = 1;
+                    if(draw2)
+                        draw2(play1);
+                    if(draw4)
+                        draw4(play1);
                 }else if(reverse && !skip){
                     currentPlayer = 2;
-                } else if (!reverse && skip) {
-                    currentPlayer = 1;
+                    if(draw2)
+                        draw2(comp1);
+                    if(draw4)
+                        draw4(comp1);
                 } else if (!reverse && !skip){
                     currentPlayer = 4;
+                    if(draw2)
+                        draw2(comp3);
+                    if(draw4)
+                        draw4(comp3);
                 }
                 break;
             }
@@ -269,22 +307,29 @@ public class Uno {
                         discardPile.addCard(wildColor(13));
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp3.getCard(elem)) == 'a' && Card.getCardNumber(comp3.getCard(elem)) == 14) {
-                        wildDrawFour4();
+                        comp3.removeCard(elem);
+                        discardPile.addCard(wildColor(13));
+                        draw4 = true;
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp3.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp3.getCard(elem)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(comp3.getCard(elem));
-                        if (Card.getCardNumber(comp3.getCard(elem)) == 10) {
-                            skip = true;
-                        } else if (Card.getCardNumber(comp3.getCard(elem)) == 11) {
-                            wildPlayer4(2);
-                        } else if (Card.getCardNumber(comp3.getCard(elem)) == 12) {
-                            if (reverse) {
-                                reverse = false;
-                            } else if (!reverse) {
-                                reverse = true;
-                            } else {
-
-                            }
+                        switch (Card.getCardNumber(comp3.getCard(elem))) {
+                            case 10:
+                                skip = true;
+                                break;
+                            case 11:
+                                draw2 = true;
+                                break;
+                            case 12:
+                                if (reverse) {
+                                    reverse = false;
+                                } else if (!reverse) {
+                                    reverse = true;
+                                } else {
+                                    
+                                }   break;
+                            default:
+                                break;
                         }
                         comp3.removeCard(elem);
                         cardPlayed = 1;
@@ -303,14 +348,24 @@ public class Uno {
                     gameEnded = true;
                     System.exit(0);
                 }
-                if (reverse && skip) {
+                if (reverse && skip || !reverse && skip) {
                     currentPlayer = 2;
+                    if(draw2)
+                        draw2(comp1);
+                    if(draw4)
+                        draw4(comp1);
                 }else if(reverse && !skip){
                     currentPlayer = 3;
-                } else if (!reverse && skip) {
-                    currentPlayer = 2;
+                    if(draw2)
+                        draw2(comp2);
+                    if(draw4)
+                        draw4(comp2);
                 } else if (!reverse && !skip){
                     currentPlayer = 1;
+                    if(draw2)
+                        draw2(play1);
+                    if(draw4)
+                        draw4(play1);
                 }
                 break;
             }
@@ -326,113 +381,6 @@ public class Uno {
         display++;
         System.out.println(display + ". Draw Card");
     }
-    public static void wildPlayer(int i) {
-        System.out.println();
-        System.out.println("Which Player do you want to draw " + i + "?:");
-        System.out.println("1. Player 2 Cards: " + comp1.getSize());
-        System.out.println("2. Player 3 Cards: " + comp2.getSize());
-        System.out.println("3. Player 4 Cards: " + comp3.getSize());
-        //s.next();
-        int choice = si.nextInt();
-        if (choice == 1) {
-            for (int y = 1; y <= i; y++) {
-                comp1.addCard(deck);
-            }
-        } else if (choice == 2) {
-            for (int y = 1; y <= i; y++) {
-                comp2.addCard(deck);
-            }
-        } else if (choice == 3) {
-            for (int y = 1; y <= i; y++) {
-                comp3.addCard(deck);
-            }
-        } else {
-            System.out.println();
-            System.out.println("Please select a valid number(1-3)");
-            wildPlayer(i);
-        }
-    }
-
-    public static void wildPlayer2(int i) {
-        System.out.println();
-        System.out.println("Which Player do you want to draw " + i + "?:");
-        System.out.println("1. Player 1 Cards: " + play1.getSize());
-        System.out.println("2. Player 3 Cards: " + comp2.getSize());
-        System.out.println("3. Player 4 Cards: " + comp3.getSize());
-        //s.next();
-        int choice = si.nextInt();
-        if (choice == 1) {
-            for (int y = 1; y <= i; y++) {
-                play1.addCard(deck);
-            }
-        } else if (choice == 2) {
-            for (int y = 1; y <= i; y++) {
-                comp2.addCard(deck);
-            }
-        } else if (choice == 3) {
-            for (int y = 1; y <= i; y++) {
-                comp3.addCard(deck);
-            }
-        } else {
-            System.out.println();
-            System.out.println("Please select a valid number(1-3)");
-            wildPlayer(i);
-        }
-    }
-    public static void wildPlayer3(int i) {
-        System.out.println();
-        System.out.println("Which Player do you want to draw " + i + "?:");
-        System.out.println("1. Player 1 Cards: " + play1.getSize());
-        System.out.println("2. Player 2 Cards: " + comp1.getSize());
-        System.out.println("3. Player 4 Cards: " + comp3.getSize());
-        //s.next();
-        int choice = si.nextInt();
-        if (choice == 1) {
-            for (int y = 1; y <= i; y++) {
-                play1.addCard(deck);
-            }
-        } else if (choice == 2) {
-            for (int y = 1; y <= i; y++) {
-                comp1.addCard(deck);
-            }
-        } else if (choice == 3) {
-            for (int y = 1; y <= i; y++) {
-                comp3.addCard(deck);
-            }
-        } else {
-            System.out.println();
-            System.out.println("Please select a valid number(1-3)");
-            wildPlayer(i);
-        }
-    }
-        public static void wildPlayer4(int i) {
-        System.out.println();
-        System.out.println("Which Player do you want to draw " + i + "?:");
-        System.out.println("1. Player 1 Cards: " + play1.getSize());
-        System.out.println("2. Player 2 Cards: " + comp1.getSize());
-        System.out.println("3. Player 3 Cards: " + comp2.getSize());
-        //s.next();
-        int choice = si.nextInt();
-        if (choice == 1) {
-            for (int y = 1; y <= i; y++) {
-                play1.addCard(deck);
-            }
-        } else if (choice == 2) {
-            for (int y = 1; y <= i; y++) {
-                comp1.addCard(deck);
-            }
-        } else if (choice == 3) {
-            for (int y = 1; y <= i; y++) {
-                comp2.addCard(deck);
-            }
-        } else {
-            System.out.println();
-            System.out.println("Please select a valid number(1-3)");
-            wildPlayer(i);
-        }
-    }
-
-
     public static Card wildColor(int cardNumber) {
         System.out.print("What color do you want the deck to be?: ");
         //s.next();
@@ -452,24 +400,14 @@ public class Uno {
         }
         return new Card(cardNumber, color);
     }
-
-    public static void wildDrawFour() {
-        discardPile.addCard(wildColor(14));
-        wildPlayer(4);
+    public static void draw2(deal play){
+        for(int i = 0; i <= 1; i++)
+           play.addCard(deck);
     }
-    public static void wildDrawFour2() {
-        discardPile.addCard(wildColor(14));
-        wildPlayer2(4);
+    public static void draw4(deal play){
+        for(int i = 0; i <= 3; i++)
+            play.addCard(deck);
     }
-    public static void wildDrawFour3() {
-        discardPile.addCard(wildColor(14));
-        wildPlayer3(4);
-    }
-    public static void wildDrawFour4() {
-        discardPile.addCard(wildColor(14));
-        wildPlayer4(4);
-    }
-
     public static void printDiscard() {
         System.out.print("Discard Pile: ");
         System.out.println(discardPile.getLast());
