@@ -1,4 +1,7 @@
 #Version History(newest first)
+##0.0.4.0
+Drawing a card follows Uno rules. Now you can draw a card if you can't play any other card, then you can see if you can play that card
+If you can't play that card the option for draw a card turns into "End Turn". The drawn card will be at spot 1. 
 ##0.0.3.0
 Fixed problem where entering the wrong input results in game crash
 Made it so you can type in just the first letter of the color you want to pick for wilds. 
