@@ -131,6 +131,9 @@ public class cardHandler {
     public Card getLast(){
         return cards.get(cards.size() - 1);
     }
+    public void addCard(Card addedCard){
+        cards.add(addedCard);
+    }
     public int getSize(){
         return cards.size();
     }
