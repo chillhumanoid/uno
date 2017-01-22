@@ -47,16 +47,22 @@ public class Uno {
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 System.out.println(); //spacing
                 int choice = 0;
-                printHand(play1); //show the user what is in their hand
-                System.out.println(); //spacing
-                System.out.println("Player 1");
-                printDiscard(); //show the top card in the discard pile
-                do {//do this while card played = 0a
+                Boolean drawCard = false;
+                do {//do this while card played = 0
+                    System.out.println(); //spacing
+                    printHand(play1, drawCard); //show the user what is in their hand
+                    System.out.println(); //spacing
+                    printDiscard();
+                    System.out.println("Player 1");
                     choice = getCardNumber();
                     int elem = choice - 1;
                     if (choice == (play1.getSize() + 1)) {
-                        play1.addCard(deck);
-                        cardPlayed = 1;
+                        if(!drawCard){
+                            play1.addCard(deck);
+                            drawCard = true;
+                        }else if(drawCard){
+                            cardPlayed = 1;
+                        }
                     } else if (Card.getCardColor(play1.getCard(elem)) == 'a' && Card.getCardNumber(play1.getCard(elem)) == 13) { //gets the color of the card that user chose
                         discardPile.addCard(wildColor(13));
                         play1.removeCard(elem);//remove the card from the player deck
@@ -137,17 +143,23 @@ public class Uno {
                 draw4 = false;
                 int choice = 0;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
-                System.out.println(); //spacing
-                printHand(comp1); //show the user what is in their hand
-                System.out.println(); //spacing
-                System.out.println("Player 2");
-                printDiscard(); //show the top card in the discard pile
+                boolean drawCard = false;
+                
                 do {//do this while card played = 0
+                    System.out.println(); //spacing
+                    printHand(comp1, drawCard); //show the user what is in their hand
+                    System.out.println(); //spacing
+                    System.out.println("Player 2");
+                    printDiscard();
                     choice = getCardNumber();
                     int elem = choice - 1;
                     if (choice == (comp1.getSize() + 1)) {
-                        comp1.addCard(deck);
-                        cardPlayed = 1;
+                        if(!drawCard){
+                            comp1.addCard(deck);
+                            drawCard = true;
+                        }else if(drawCard){
+                            cardPlayed = 1;
+                        }
                     } else if (Card.getCardColor(comp1.getCard(elem)) == 'a' && Card.getCardNumber(comp1.getCard(elem)) == 13) {
                         discardPile.addCard(wildColor(13));
                         comp1.removeCard(elem);//remove the card from the player deck. it's no longer needed there
@@ -228,18 +240,23 @@ public class Uno {
                 draw2 = false;
                 draw4 = false;
                 int choice = 0;
+                boolean drawCard = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
-                System.out.println(); //spacing
-                printHand(comp2); //show the user what is in their hand
-                System.out.println(); //spacing
-                System.out.println("Player 3");
-                printDiscard(); //show the top card in the discard pile
                 do {//do this while card played = 0
+                    System.out.println(); //spacing
+                    printHand(comp2, drawCard);
+                    System.out.println();
+                    printDiscard();
+                    System.out.println("Player 3");
                     choice = getCardNumber();
                     int elem = choice - 1;
                     if (choice == (comp2.getSize() + 1)) {
-                        comp2.addCard(deck);
-                        cardPlayed = 1;
+                        if(!drawCard){
+                            comp2.addCard(deck);
+                            drawCard = true;
+                        }else if(drawCard){
+                            cardPlayed = 1;
+                        }
                     } else if (Card.getCardColor(comp2.getCard(elem)) == 'a' && Card.getCardNumber(comp2.getCard(elem)) == 13) { //gets the color of the card that user chose
                         comp2.removeCard(elem);//remove the card from the player deck. it's no longer needed there
                         discardPile.addCard(wildColor(13));
@@ -319,18 +336,23 @@ public class Uno {
                 draw2 = false;
                 draw4 = false;
                 int choice = 0;
+                boolean drawCard = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
-                System.out.println(); //spacing
-                printHand(comp3); //show the user what is in their hand
-                System.out.println(); //spacing
-                System.out.println("Player 4");
-                printDiscard(); //show the top card in the discard pile
                 do {//do this while card played = 0
+                    System.out.println();
+                    printHand(comp3, drawCard);
+                    System.out.println();
+                    printDiscard();
+                    System.out.println("Player 4");
                     choice = getCardNumber();
                     int elem = choice - 1;
                     if (choice == (comp3.getSize() + 1)) {
-                        comp3.addCard(deck);
-                        cardPlayed = 1;
+                        if(!drawCard){
+                            comp3.addCard(deck);
+                            drawCard = true;
+                        }else if(drawCard){
+                            cardPlayed = 1;
+                        }
                     } else if (Card.getCardColor(comp3.getCard(elem)) == 'a' && Card.getCardNumber(comp3.getCard(elem)) == 13) { //gets the color of the card that user chose
                         comp3.removeCard(elem);//remove the card from the player deck. it's no longer needed there
                         discardPile.addCard(wildColor(13));
@@ -408,14 +430,18 @@ public class Uno {
         } while (!gameEnded);
     }
 
-    public static void printHand(deal play1) {
+    public static void printHand(deal play1, boolean drawCard) {
         int display = 0;
         for (int x = 0; x < play1.getSize(); x++) {
             display = x + 1;
             System.out.println(display + ". " + play1.getCard(x));
         }
         display++;
-        System.out.println(display + ". Draw Card");
+        if(!drawCard){
+            System.out.println(display + ". Draw Card");
+        }else if(drawCard){
+            System.out.println(display + ". End Turn");
+        }
     }
 
     public static Card wildColor(int cardNumber) {
