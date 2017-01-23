@@ -1,4 +1,6 @@
 #Version History(newest first)
+##0.0.5.1
+fixed problem where it wouldn't allow multiple digit integers
 ##0.0.5.0
 Most likely my last update before I add some form of AI. I fixed the draw pile. If it gets lower than 4 cards, it will take the discard pile and shuffle it and make it the draw pile. I also added a way for player to call uno themselves. if they call uno falsely, or they forget to call uno, it will result in a draw 2 penalty. 
 ##0.0.4.0
