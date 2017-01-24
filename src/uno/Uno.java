@@ -20,7 +20,7 @@ public class Uno {
     static deal comp3 = new deal(); //for computer 3
     static cardHandler deck = new cardHandler();
     static Scanner s = new Scanner(System.in);
-    static Scanner si = new Scanner(System.in).useDelimiter(" *");
+    static Scanner si = new Scanner(System.in);
     static deal discardPile = new deal();
 
     public static void main(String[] args) {
@@ -176,8 +176,8 @@ public class Uno {
                     printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
                     System.out.println(); //spacing
                     System.out.println("Player 2");
-                    printDiscard();
-                    choice = getCardNumber();
+                    Card dCard = discardPile.getLast();
+                    choice = getComputerChoice(dCard, comp1);
                     int elem = choice - 1;
                     if (choice == (comp1.getSize() + 1)) {
                         if(!drawCard){
@@ -234,11 +234,6 @@ public class Uno {
                 } while (cardPlayed == 0);
                 if(comp1.getSize() == 1 && !unoCalled){
                     System.out.println("Player 2 did not call uno. +2");
-                    comp1.addCard(deck);
-                    comp1.addCard(deck);
-                }
-                if(comp1.getSize() > 1 && unoCalled){
-                    System.out.println("Player 2 falsely called uno. +2");
                     comp1.addCard(deck);
                     comp1.addCard(deck);
                 }
@@ -352,11 +347,6 @@ public class Uno {
                     comp2.addCard(deck);
                     comp2.addCard(deck);
                 }
-                if(comp2.getSize() > 1 && unoCalled){
-                    System.out.println("Player 3 falsely called uno. +2");
-                    comp2.addCard(deck);
-                    comp2.addCard(deck);
-                }
                 if (comp2.getSize() == 0) {
                     System.out.println();
                     System.out.println("Player 3 won");
@@ -463,11 +453,6 @@ public class Uno {
                 } while (cardPlayed == 0);
                 if(comp3.getSize() == 1 && !unoCalled){
                     System.out.println("Player 4 did not call uno. +2");
-                    comp3.addCard(deck);
-                    comp3.addCard(deck);
-                }
-                if(comp3.getSize() > 1 && unoCalled){
-                    System.out.println("Player 4 falsely called uno. +2");
                     comp3.addCard(deck);
                     comp3.addCard(deck);
                 }
@@ -593,6 +578,47 @@ public class Uno {
             
         }
         
+    }
+    public static int getComputerChoice(Card dCard, deal Computer){
+        int choice = 0;
+        boolean hWild = false;
+        boolean hSkip = false;
+        boolean hReverse = false;
+        boolean hDTwo = false;
+        boolean hDFour = false;
+        boolean hPlayable = false;
+        hWild = hasWild(dCard, Computer);
+        hSkip = hasSkip(dCard, Computer);
+        hReverse = hasReverse(dCard, Computer);
+        hDTwo = hasDrawTwo(dCard, Computer);
+        hDFour = hasDrawFour(dCard, Computer);
+        hPlayable = hasPlayable(dCard, Computer);
+        return choice;
+    }
+    public static boolean hasWild(Card dCard, deal Computer){
+        boolean hWild = false;
+        
+        return hWild;
+    }
+    public static boolean hasSkip(Card dCard,deal Computer){
+        boolean hSkip = false;
+        return hSkip;
+    }
+    public static boolean hasReverse(Card dCard, deal Computer){
+        boolean hReverse = false;
+        return hReverse;
+    }
+    public static boolean hasDrawTwo(Card dCard, deal Computer){
+        boolean hDTwo = false;
+        return hDTwo;
+    }
+    public static boolean hasDrawFour(Card dCard, deal Computer){
+        boolean hWild = false;
+        return hWild;
+    }
+    public static boolean hasPlayable(Card dCard, deal Computer){
+        boolean hWild = false;
+        return hWild;
     }
     public static int getCardNumber() {
         int choice = 0;
