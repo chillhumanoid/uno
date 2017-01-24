@@ -173,34 +173,43 @@ public class Uno {
                 do {//do this while card played = 0
                     uno = checkUno(comp1);
                     System.out.println(); //spacing
-                    printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
+                    //printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
                     System.out.println(); //spacing
-                    System.out.println("Player 2");
+                    printDiscard();
+                    System.out.println("Computer 1: ");
                     Card dCard = discardPile.getLast();
                     choice = getComputerChoice(dCard, comp1);
                     int elem = choice - 1;
                     if (choice == (comp1.getSize() + 1)) {
                         if(!drawCard){
+                            System.out.println();
+                            System.out.println("Computer 1 has drawn a card");
                             comp1.addCard(deck);
                             drawCard = true;
                         }else if(drawCard){
+                            System.out.println();
+                            System.out.println("Computer 1 has ended their turn without playing a card");
                             cardPlayed = 1;
                         }
                     }else if(choice == (comp1.getSize() + 2)){
                         if(!unoCalled){
                             System.out.println();
-                            System.out.println("Player 2 Calls Uno");
+                            System.out.println("Computer 1 Calls Uno");
                             unoCalled = true;
                         }else if(unoCalled){
                             System.out.println();
                             System.out.println("Please Select a Valid Card");
                         }
-                    } else if (Card.getCardColor(comp1.getCard(elem)) == 'a' && Card.getCardNumber(comp1.getCard(elem)) == 13) {
-                        discardPile.addCard(wildColor(13));
+                    } else if (Card.getCardNumber(comp1.getCard(elem)) == 13) {
+                        discardPile.addCard(wildComputerColor(13, comp1));
+                        System.out.println();
+                        System.out.println("Computer 1 has played a wild card");
                         comp1.removeCard(elem);//remove the card from the player deck. it's no longer needed there
                         cardPlayed = 1;
                     } else if (Card.getCardColor(comp1.getCard(elem)) == 'a' && Card.getCardNumber(comp1.getCard(elem)) == 14) {
-                        discardPile.addCard(wildColor(14));
+                        discardPile.addCard(wildComputerColor(14, comp1));
+                        System.out.println();
+                        System.out.println("Computer 1 has played a wild draw 4");
                         draw4 = true;
                         comp1.removeCard(choice - 1);
                         cardPlayed = 1;
@@ -208,12 +217,18 @@ public class Uno {
                         discardPile.addCard(comp1.getCard(elem));
                         switch (Card.getCardNumber(comp1.getCard(elem))) {
                             case 10:
+                                System.out.println();
+                                System.out.println("Computer 1 has played a skip card");
                                 skip = true;
                                 break;
                             case 11:
+                                System.out.println();
+                                System.out.println("Computer 1 has played a draw 2 card");
                                 draw2 = true;
                                 break;
                             case 12:
+                                System.out.println();
+                                System.out.println("Computer 1 has played a reverse card");
                                 if (reverse) {
                                     reverse = false;
                                 } else if (!reverse) {
@@ -225,6 +240,8 @@ public class Uno {
                             default:
                                 break;
                         }
+                        System.out.println();
+                        System.out.println("Computer 1 has played a card");
                         comp1.removeCard(choice - 1);
                         cardPlayed = 1;
                     } else {
@@ -233,13 +250,13 @@ public class Uno {
                     }
                 } while (cardPlayed == 0);
                 if(comp1.getSize() == 1 && !unoCalled){
-                    System.out.println("Player 2 did not call uno. +2");
+                    System.out.println("Computer 1 did not call uno. +2");
                     comp1.addCard(deck);
                     comp1.addCard(deck);
                 }
                 if (comp1.getSize() == 0) {
                     System.out.println();
-                    System.out.println("Player 2 won");
+                    System.out.println("Computer 1 won");
                     gameEnded = true;
                     System.exit(0);
                 }
@@ -277,53 +294,68 @@ public class Uno {
                 draw2 = false;
                 draw4 = false;
                 int choice = 0;
+                int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 boolean drawCard = false;
                 boolean unoCalled = false;
-                int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
                 do {//do this while card played = 0
                     uno = checkUno(comp2);
                     System.out.println(); //spacing
-                    printHand(comp2, drawCard, uno, unoCalled);
-                    System.out.println();
+                    //printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
+                    System.out.println(); //spacing
                     printDiscard();
-                    System.out.println("Player 3");
-                    choice = getCardNumber();
+                    System.out.println("Computer 2");
+                    Card dCard = discardPile.getLast();
+                    choice = getComputerChoice(dCard, comp2);
                     int elem = choice - 1;
                     if (choice == (comp2.getSize() + 1)) {
                         if(!drawCard){
+                            System.out.println();
+                            System.out.println("Computer 2 has drawn a card");
                             comp2.addCard(deck);
                             drawCard = true;
                         }else if(drawCard){
+                            System.out.println();
+                            System.out.println("Computer 2 has ended their turn without playing a card");
                             cardPlayed = 1;
                         }
-                    }else if(choice == (comp2.getSize()+2)){
+                    }else if(choice == (comp2.getSize() + 2)){
                         if(!unoCalled){
                             System.out.println();
-                            System.out.println("Player 3 Calls Uno");
+                            System.out.println("Computer 2 Calls Uno");
                             unoCalled = true;
                         }else if(unoCalled){
                             System.out.println();
                             System.out.println("Please Select a Valid Card");
                         }
-                    } else if (Card.getCardColor(comp2.getCard(elem)) == 'a' && Card.getCardNumber(comp2.getCard(elem)) == 13) { //gets the color of the card that user chose
+                    } else if (Card.getCardNumber(comp2.getCard(elem)) == 13) {
+                        discardPile.addCard(wildComputerColor(13, comp2));
+                        System.out.println();
+                        System.out.println("Computer 2 has played a wild card");
                         comp2.removeCard(elem);//remove the card from the player deck. it's no longer needed there
-                        discardPile.addCard(wildColor(13));
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp2.getCard(elem)) == 'a' && Card.getCardNumber(comp2.getCard(elem)) == 14) {
-                        comp2.removeCard(elem);
-                        discardPile.addCard(wildColor(14));
+                    } else if (Card.getCardNumber(comp2.getCard(elem)) == 14) {
+                        discardPile.addCard(wildComputerColor(14, comp2));
+                        System.out.println();
+                        System.out.println("Computer 2 has played a wild draw 4");
                         draw4 = true;
+                        comp2.removeCard(choice - 1);
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp2.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp2.getCard(elem)) == Card.getCardNumber(discardPile.getLast())) {
-                        discardPile.addCard(comp2.getCard(choice - 1));
-                        switch (Card.getCardNumber(comp2.getCard(choice - 1))) {
+                    } else if (Card.getCardColor(comp2.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp2.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
+                        discardPile.addCard(comp2.getCard(elem));
+                        switch (Card.getCardNumber(comp2.getCard(elem))) {
                             case 10:
+                                System.out.println();
+                                System.out.println("Computer 2 has played a skip card");
                                 skip = true;
                                 break;
                             case 11:
+                                System.out.println();
+                                System.out.println("Computer 2 has played a draw 2 card");
                                 draw2 = true;
                                 break;
                             case 12:
+                                System.out.println();
+                                System.out.println("Computer 2 has played a reverse card");
                                 if (reverse) {
                                     reverse = false;
                                 } else if (!reverse) {
@@ -335,6 +367,8 @@ public class Uno {
                             default:
                                 break;
                         }
+                        System.out.println();
+                        System.out.println("Computer 2 has played a card");
                         comp2.removeCard(choice - 1);
                         cardPlayed = 1;
                     } else {
@@ -343,13 +377,13 @@ public class Uno {
                     }
                 } while (cardPlayed == 0);
                 if(comp2.getSize() == 1 && !unoCalled){
-                    System.out.println("Player 3 did not call uno. +2");
+                    System.out.println("Computer 2 did not call uno. +2");
                     comp2.addCard(deck);
                     comp2.addCard(deck);
                 }
                 if (comp2.getSize() == 0) {
                     System.out.println();
-                    System.out.println("Player 3 won");
+                    System.out.println("Computer 2 won");
                     gameEnded = true;
                     System.exit(0);
                 }
@@ -380,59 +414,75 @@ public class Uno {
                 }
                 checkDraw(deck, discardPile);
                 break;
+
             }
             while (currentPlayer == 4) {
                 skip = false;
                 draw2 = false;
                 draw4 = false;
                 int choice = 0;
-                boolean unoCalled = false;
-                boolean drawCard = false;
                 int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
+                boolean drawCard = false;
+                boolean unoCalled = false;
                 do {//do this while card played = 0
                     uno = checkUno(comp3);
-                    System.out.println();
-                    printHand(comp3, drawCard, uno, unoCalled);
-                    System.out.println();
+                    System.out.println(); //spacing
+                    //printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
+                    System.out.println(); //spacing
                     printDiscard();
-                    System.out.println("Player 4");
-                    choice = getCardNumber();
+                    System.out.println("Computer 3");
+                    Card dCard = discardPile.getLast();
+                    choice = getComputerChoice(dCard, comp3);
                     int elem = choice - 1;
                     if (choice == (comp3.getSize() + 1)) {
                         if(!drawCard){
+                            System.out.println();
+                            System.out.println("Computer 3 has drawn a card");
                             comp3.addCard(deck);
                             drawCard = true;
                         }else if(drawCard){
+                            System.out.println();
+                            System.out.println("Computer 3 has ended their turn without playing a card");
                             cardPlayed = 1;
                         }
                     }else if(choice == (comp3.getSize() + 2)){
                         if(!unoCalled){
                             System.out.println();
-                            System.out.println("Player 4 calls Uno");
+                            System.out.println("Computer 3 Calls Uno");
                             unoCalled = true;
                         }else if(unoCalled){
                             System.out.println();
-                            System.out.println("Please select a valid option");
+                            System.out.println("Please Select a Valid Card");
                         }
-                    } else if (Card.getCardColor(comp3.getCard(elem)) == 'a' && Card.getCardNumber(comp3.getCard(elem)) == 13) { //gets the color of the card that user chose
+                    } else if (Card.getCardNumber(comp3.getCard(elem)) == 13) {
+                        discardPile.addCard(wildComputerColor(13, comp3));
+                        System.out.println();
+                        System.out.println("Computer 3 has played a wild card");
                         comp3.removeCard(elem);//remove the card from the player deck. it's no longer needed there
-                        discardPile.addCard(wildColor(13));
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp3.getCard(elem)) == 'a' && Card.getCardNumber(comp3.getCard(elem)) == 14) {
-                        comp3.removeCard(elem);
-                        discardPile.addCard(wildColor(13));
+                    } else if (Card.getCardNumber(comp3.getCard(elem)) == 14) {
+                        discardPile.addCard(wildComputerColor(14, comp3));
+                        System.out.println();
+                        System.out.println("Computer 3 has played a wild draw 4");
                         draw4 = true;
+                        comp3.removeCard(choice - 1);
                         cardPlayed = 1;
-                    } else if (Card.getCardColor(comp3.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp3.getCard(elem)) == Card.getCardNumber(discardPile.getLast())) {
+                    } else if (Card.getCardColor(comp3.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(comp3.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
                         discardPile.addCard(comp3.getCard(elem));
                         switch (Card.getCardNumber(comp3.getCard(elem))) {
                             case 10:
+                                System.out.println();
+                                System.out.println("Computer 3 has played a skip card");
                                 skip = true;
                                 break;
                             case 11:
+                                System.out.println();
+                                System.out.println("Computer 3 has played a draw 2 card");
                                 draw2 = true;
                                 break;
                             case 12:
+                                System.out.println();
+                                System.out.println("Computer 3 has played a reverse card");
                                 if (reverse) {
                                     reverse = false;
                                 } else if (!reverse) {
@@ -444,7 +494,9 @@ public class Uno {
                             default:
                                 break;
                         }
-                        comp3.removeCard(elem);
+                        System.out.println();
+                        System.out.println("Computer 3 has played a card");
+                        comp3.removeCard(choice - 1);
                         cardPlayed = 1;
                     } else {
                         System.out.println();
@@ -452,13 +504,13 @@ public class Uno {
                     }
                 } while (cardPlayed == 0);
                 if(comp3.getSize() == 1 && !unoCalled){
-                    System.out.println("Player 4 did not call uno. +2");
+                    System.out.println("Computer 3 did not call uno. +2");
                     comp3.addCard(deck);
                     comp3.addCard(deck);
                 }
                 if (comp3.getSize() == 0) {
                     System.out.println();
-                    System.out.println("Player 4 won");
+                    System.out.println("Computer 3 won");
                     gameEnded = true;
                     System.exit(0);
                 }
@@ -489,6 +541,7 @@ public class Uno {
                 }
                 checkDraw(deck, discardPile);
                 break;
+
             }
         } while (!gameEnded);
     }
@@ -585,6 +638,7 @@ public class Uno {
         boolean hSkip = false;
         boolean hReverse = false;
         boolean hDTwo = false;
+        boolean unoCalled = false;
         boolean hDFour = false;
         boolean hPlayable = false;
         hWild = hasWild(dCard, Computer);
@@ -593,32 +647,157 @@ public class Uno {
         hDTwo = hasDrawTwo(dCard, Computer);
         hDFour = hasDrawFour(dCard, Computer);
         hPlayable = hasPlayable(dCard, Computer);
+        if(Computer.getSize() == 2 && !unoCalled){
+            choice = Computer.getSize() + 2;
+        }else if(hDTwo){
+            choice = findDTwo(dCard, Computer);
+            choice++;
+        }else if(hSkip){
+            choice = findSkip(Computer, dCard);
+            choice++;
+        }else if(hReverse){
+            choice = findReverse(dCard, Computer);
+            choice++;
+        }else if(hPlayable){
+            choice = findPlayable(dCard, Computer);
+            choice++;
+        }else if(hWild && !hDTwo && !hSkip && !hReverse && !hPlayable){
+            choice = findWild(Computer);
+            choice++;
+        }else if(hDFour && !hWild && !hDTwo && !hSkip && !hReverse && !hPlayable){
+            choice = findDrawFour(Computer);
+            choice++;
+        }else{
+            choice = Computer.getSize() + 1;
+        }
         return choice;
+    }
+    public static int findWild(deal Computer){
+        int elem = 0;
+        for(int i=0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==13){
+                elem = i;
+            }
+        }
+        return elem;
+    }
+    public static int findDTwo(Card dCard, deal Computer){
+        int elem = 0;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==11 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                elem = i;
+        }
+        return elem;
+    }
+    public static int findSkip(deal Computer, Card dCard){
+        int elem = 0;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==10 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                elem = i;
+        }
+        return elem;
+    }
+    public static int findReverse(Card dCard, deal Computer){
+        int elem = 0;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==12 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                elem = i;
+        }
+        return elem;
+    }
+    public static int findDrawFour(deal Computer){
+        int elem = 0;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==14)
+                elem = i;
+        }
+        return elem;
+    }
+    public static int findPlayable(Card dCard, deal Computer){
+        int elem = 0;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))<10 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                elem = i;
+        }
+        return elem;
     }
     public static boolean hasWild(Card dCard, deal Computer){
         boolean hWild = false;
-        
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==13)
+                hWild = true;
+        }
         return hWild;
     }
     public static boolean hasSkip(Card dCard,deal Computer){
         boolean hSkip = false;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==10 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                hSkip = true;
+        }
         return hSkip;
     }
     public static boolean hasReverse(Card dCard, deal Computer){
         boolean hReverse = false;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==12 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                hReverse = true;
+        }
         return hReverse;
     }
     public static boolean hasDrawTwo(Card dCard, deal Computer){
         boolean hDTwo = false;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==11 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                hDTwo = true;
+        }
         return hDTwo;
     }
     public static boolean hasDrawFour(Card dCard, deal Computer){
-        boolean hWild = false;
-        return hWild;
+        boolean hDrawFour = false;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))==14)
+                hDrawFour = true;
+        }
+        return hDrawFour;
     }
     public static boolean hasPlayable(Card dCard, deal Computer){
-        boolean hWild = false;
-        return hWild;
+        boolean hPlayable = false;
+        for(int i = 0; i < Computer.getSize(); i++){
+            if(Card.getCardNumber(Computer.getCard(i))<10 && Card.getCardColor(Computer.getCard(i))==Card.getCardColor(dCard))
+                hPlayable = true;
+        }
+        return hPlayable;
+    }
+    public static Card wildComputerColor(int cardNumber, deal computer){
+        int blue = 0;
+        int red = 0;
+        int yellow = 0;
+        int green = 0;
+        char cColor = 'a';
+        for(int i = 0; i < computer.getSize(); i++){
+            if(Card.getCardColor(computer.getCard(i)) == 'b'){
+                blue++;
+            }else if(Card.getCardColor(computer.getCard(i))=='r'){
+                red++;
+            }else if(Card.getCardColor(computer.getCard(i))=='y'){
+                yellow++;
+            }else if(Card.getCardColor(computer.getCard(i))=='g'){
+                green++;
+            }
+        }
+        if(blue > green && blue > yellow && blue > red){
+            cColor = 'b';
+        }else if(green > blue && green > yellow && green > red){
+            cColor = 'g';
+        }else if(yellow > green && yellow > blue && yellow > red){
+            cColor = 'y';
+        }else if(red > green && red > yellow && red > blue){
+            cColor = 'r';
+        }else{
+            cColor = 'b';
+        }
+        return new Card(cardNumber, cColor);
     }
     public static int getCardNumber() {
         int choice = 0;
