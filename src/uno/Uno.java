@@ -191,7 +191,7 @@ public class Uno {
                     printDiscard();
                     System.out.println("Player 1");
                     choice = getCardNumber();
-                    while(choice >= play1.getSize() || choice < 0){
+                    while(choice > play1.getSize()+2 || choice < 0){
                         System.out.println("Invalid Input");
                         choice = getCardNumber();
                     }
