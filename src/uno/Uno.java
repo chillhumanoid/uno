@@ -162,7 +162,6 @@ public class Uno {
                 checkDraw(deck, discardPile);
                 System.out.println();
                 break;
-             
             }
             while (currentPlayer == 2) {
                 skip = false;
