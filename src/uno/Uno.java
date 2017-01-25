@@ -33,8 +33,8 @@ public class Uno {
             comp3.addCard(deck);
         }
         discardPile.addCard(deck);//adds the top card of the deck to the discard pile "face up"
-        if(Card.getCardNumber(discardPile.getLast())== 14){
-            discardPile.addCard(deck);
+        if(Card.getCardNumber(discardPile.getLast()) == 14){
+            discardPile.addCard(wildColor(14));
         }else if(Card.getCardNumber(discardPile.getLast())==13){
             discardPile.addCard(wildColor(13));
         }
@@ -48,6 +48,133 @@ public class Uno {
         boolean uno = false;
         do {
             while (currentPlayer == 1) {
+                /*skip = false;
+                draw2 = false;
+                draw4 = false;
+                int choice = 0;
+                int cardPlayed = 0; //this is similar to a boolean. 1's and 0's ya know. 
+                boolean drawCard = false;
+                boolean unoCalled = false;
+                do {//do this while card played = 0
+                    uno = checkUno(play1);
+                    //System.out.println(); //spacing
+                    printHand(play1, drawCard, uno, unoCalled); //show the user what is in their hand
+                    //System.out.println(); //spacing
+                    printDiscard();
+                    System.out.println("Player 1: ");
+                    Card dCard = discardPile.getLast();
+                    choice = getComputerChoice(dCard, play1, unoCalled);
+                    int elem = choice - 1;
+                    if (choice == (play1.getSize() + 1)) {
+                        if(!drawCard){
+                            //System.out.println();
+                            System.out.println("Player 1 has drawn a card");
+                            play1.addCard(deck);
+                            drawCard = true;
+                        }else if(drawCard){
+                            //System.out.println();
+                            System.out.println("Player 1 has ended their turn without playing a card");
+                            cardPlayed = 1;
+                        }
+                    }else if(choice == (play1.getSize() + 2)){
+                        if(!unoCalled){
+                            ///System.out.println();
+                            System.out.println("Player 1 Calls Uno");
+                            unoCalled = true;
+                        }else if(unoCalled){
+                            //System.out.println();
+                            //System.out.println("Please Select a Valid Card");
+                        }
+                    } else if (Card.getCardNumber(play1.getCard(elem)) == 13) {
+                        discardPile.addCard(wildComputerColor(13, play1));
+                        //System.out.println();
+                        System.out.println("Player 1 has played a wild card");
+                        play1.removeCard(elem);//remove the card from the player deck. it's no longer needed there
+                        cardPlayed = 1;
+                    } else if (Card.getCardNumber(play1.getCard(elem)) == 14) {
+                        discardPile.addCard(wildComputerColor(14, play1));
+                        //System.out.println();
+                        System.out.println("Player 1 has played a wild draw 4");
+                        draw4 = true;
+                        play1.removeCard(choice - 1);
+                        cardPlayed = 1;
+                    } else if (Card.getCardColor(play1.getCard(elem)) == Card.getCardColor(discardPile.getLast()) || Card.getCardNumber(play1.getCard(choice - 1)) == Card.getCardNumber(discardPile.getLast())) {
+                        discardPile.addCard(play1.getCard(elem));
+                        switch (Card.getCardNumber(play1.getCard(elem))) {
+                            case 10:
+                                //System.out.println();
+                                System.out.println("Player 1 has played a skip card");
+                                skip = true;
+                                break;
+                            case 11:
+                                //System.out.println();
+                                System.out.println("Player 1 has played a draw 2 card");
+                                draw2 = true;
+                                break;
+                            case 12:
+                                //System.out.println();
+                                System.out.println("Player 1 has played a reverse card");
+                                if (reverse) {
+                                    reverse = false;
+                                } else if (!reverse) {
+                                    reverse = true;
+                                } else {
+
+                                }
+                                break;
+                            case 9:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 8:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 7:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 6:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 5:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 4:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 3:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 2:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 1:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            case 0:
+                                System.out.println("Player 1 has played a normal card");
+                                break;
+                            default:
+                                break;
+                        }
+                        //System.out.println();
+                        //System.out.println("Computer 1 has played a card");
+                        play1.removeCard(choice - 1);
+                        cardPlayed = 1;
+                    } else {
+                        //System.out.println();
+                        //System.out.println("Please Select a valid card");
+                    }
+                } while (cardPlayed == 0);
+                if(play1.getSize() == 1 && !unoCalled){
+                    System.out.println("Player 1 did not call uno. +2");
+                    play1.addCard(deck);
+                    play1.addCard(deck);
+                }
+                if (play1.getSize() == 0) {
+                    System.out.println();
+                    System.out.println("Player 1 won");
+                    gameEnded = true;
+                    System.exit(0);
+                }*/
                 skip = false; //added so that when it next goes to player 1, those values are reset. 
                 draw2 = false; //^
                 draw4 = false; // ^^
@@ -64,6 +191,10 @@ public class Uno {
                     printDiscard();
                     System.out.println("Player 1");
                     choice = getCardNumber();
+                    while(choice >= play1.getSize() || choice < 0){
+                        System.out.println("Invalid Input");
+                        choice = getCardNumber();
+                    }
                     int elem = choice - 1;
                     if (choice == (play1.getSize() + 1)) {
                         if(!drawCard){
@@ -161,7 +292,7 @@ public class Uno {
                 }
                 checkDraw(deck, discardPile);
                 break;
-                
+             
             }
             while (currentPlayer == 2) {
                 skip = false;
@@ -331,7 +462,7 @@ public class Uno {
                 do {//do this while card played = 0
                     uno = checkUno(comp2);
                     //System.out.println(); //spacing
-                    //printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
+                    //printHand(comp2, drawCard, uno, unoCalled); //show the user what is in their hand
                     //System.out.println(); //spacing
                     printDiscard();
                     System.out.println("Computer 2");
@@ -487,7 +618,7 @@ public class Uno {
                 boolean unoCalled = false;
                 do {//do this while card played = 0
                     uno = checkUno(comp3);
-                    //printHand(comp1, drawCard, uno, unoCalled); //show the user what is in their hand
+                    //printHand(comp3, drawCard, uno, unoCalled); //show the user what is in their hand
                     printDiscard();
                     System.out.println("Computer 3");
                     Card dCard = discardPile.getLast();
@@ -914,10 +1045,11 @@ public class Uno {
                 System.out.print("Which card do you want to play: ");
                 choice = si.nextInt();
                 si.nextLine();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input");
+            } catch (InputMismatchException  e) {
+                System.out.println("Invalid Input");
                 si.nextLine();
             }
+            
         }while(choice == 0);
         return choice;
     }
