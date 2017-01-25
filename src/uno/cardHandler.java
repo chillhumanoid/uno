@@ -127,12 +127,20 @@ public class cardHandler {
     public void shuffleDeck(){
         Collections.shuffle(cards);
         Collections.shuffle(cards);
+        Collections.shuffle(cards);
+        Collections.shuffle(cards);
     }
     public Card getLast(){
         return cards.get(cards.size() - 1);
     }
     public void addCard(Card addedCard){
         cards.add(addedCard);
+    }
+    public void printDeck(){ 
+        for(int i = 0; i < cards.size(); i=i+1){
+            Card sd = new Card(cards.get(i).getCardNumber(),cards.get(i).getCardColor());
+            System.out.println(sd.toString());
+        }
     }
     public int getSize(){
         return cards.size();
