@@ -1,4 +1,12 @@
 #Version History(newest first)
+##1.0.0.0
+Fixed various problems, including an issue where changing the discard pile to draw pile dind't work 100%. In addition, when it did change the piles, it wouldn't change the wild cards back to "any". There is no more issue as far as I can tell on 100 simulations of one card ruling the world(all you could draw was the one card). Fixed an issue where if you entered a number too large, it broke the game.
+
+Again, as far as I can tell, this is the final version of the command line version of the game. I do plan on creating it in other languages. My first goal is python. then C#. once i have c# I will create a GUI version of the game. I might do that with java but that is not a current priority. 
+
+It's been fun. Thank you for watching my streams. If you notice any more bugs, please let me know. 
+
+ Chillhumanoid
 ##0.1.0.0
 Got rid of mac version as my script did NOT work. Working AI.
 ##0.0.5.1
