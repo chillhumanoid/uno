@@ -178,7 +178,7 @@ public class Uno {
                     printDiscard();
                     System.out.println("Computer 1: ");
                     Card dCard = discardPile.getLast();
-                    choice = getComputerChoice(dCard, comp1);
+                    choice = getComputerChoice(dCard, comp1, unoCalled);
                     int elem = choice - 1;
                     if (choice == (comp1.getSize() + 1)) {
                         if(!drawCard){
@@ -305,7 +305,7 @@ public class Uno {
                     printDiscard();
                     System.out.println("Computer 2");
                     Card dCard = discardPile.getLast();
-                    choice = getComputerChoice(dCard, comp2);
+                    choice = getComputerChoice(dCard, comp2, unoCalled);
                     int elem = choice - 1;
                     if (choice == (comp2.getSize() + 1)) {
                         if(!drawCard){
@@ -432,7 +432,7 @@ public class Uno {
                     printDiscard();
                     System.out.println("Computer 3");
                     Card dCard = discardPile.getLast();
-                    choice = getComputerChoice(dCard, comp3);
+                    choice = getComputerChoice(dCard, comp3, unoCalled);
                     int elem = choice - 1;
                     if (choice == (comp3.getSize() + 1)) {
                         if(!drawCard){
@@ -632,13 +632,12 @@ public class Uno {
         }
         
     }
-    public static int getComputerChoice(Card dCard, deal Computer){
+    public static int getComputerChoice(Card dCard, deal Computer, boolean unoCalled){
         int choice = 0;
         boolean hWild = false;
         boolean hSkip = false;
         boolean hReverse = false;
         boolean hDTwo = false;
-        boolean unoCalled = false;
         boolean hDFour = false;
         boolean hPlayable = false;
         hWild = hasWild(dCard, Computer);
@@ -649,26 +648,34 @@ public class Uno {
         hPlayable = hasPlayable(dCard, Computer);
         if(Computer.getSize() == 2 && !unoCalled){
             choice = Computer.getSize() + 2;
+            System.out.println("Attempted call uno");
         }else if(hDTwo){
             choice = findDTwo(dCard, Computer);
             choice++;
+            System.out.println("Attempted draw2");
         }else if(hSkip){
             choice = findSkip(Computer, dCard);
             choice++;
+            System.out.println("Attempted skip");
         }else if(hReverse){
             choice = findReverse(dCard, Computer);
             choice++;
+            System.out.println("Attempted reverse");
         }else if(hPlayable){
             choice = findPlayable(dCard, Computer);
             choice++;
+            System.out.println("attempted card 1-9");
         }else if(hWild && !hDTwo && !hSkip && !hReverse && !hPlayable){
             choice = findWild(Computer);
             choice++;
+            System.out.println("attempted wild");
         }else if(hDFour && !hWild && !hDTwo && !hSkip && !hReverse && !hPlayable){
             choice = findDrawFour(Computer);
             choice++;
+            System.out.println("attempted wild draw 4");
         }else{
             choice = Computer.getSize() + 1;
+            System.out.println("Attempted draw card");
         }
         return choice;
     }
