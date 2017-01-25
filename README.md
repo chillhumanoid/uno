@@ -1,4 +1,6 @@
 #Version History(newest first)
+##0.1.0.0
+Got rid of mac version as my script did NOT work. Working AI.
 ##0.0.5.1
 fixed problem where it wouldn't allow multiple digit integers
 ##0.0.5.0
