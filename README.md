@@ -1,4 +1,6 @@
 #Version History(newest first)
+##1.0.0.1 
+I am an idiot. Fixed that. sorta.
 ##1.0.0.0
 Fixed various problems, including an issue where changing the discard pile to draw pile dind't work 100%. In addition, when it did change the piles, it wouldn't change the wild cards back to "any". There is no more issue as far as I can tell on 100 simulations of one card ruling the world(all you could draw was the one card). Fixed an issue where if you entered a number too large, it broke the game.
 
