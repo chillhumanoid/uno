@@ -1,4 +1,9 @@
 #Version History(newest first)
+##1.0.2.0
+Second update!
+This update makes it so that it seems more like the computer is thinking. 
+i've also upgraded how it displays what card a computer played, and thus got rid of the discard pile print out after every turn.
+This creates a nicer looking command prompt :)
 ##1.0.1.0
 First update since I released a fully working version!!
 This update allows you to specify how many computers you want to face(between 1 and 3)
