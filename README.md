@@ -1,4 +1,7 @@
 #Version History(newest first)
+##1.0.1.0
+First update since I released a fully working version!!
+This update allows you to specify how many computers you want to face(between 1 and 3)
 ##1.0.0.1 
 I am an idiot. Fixed that. sorta.
 ##1.0.0.0
